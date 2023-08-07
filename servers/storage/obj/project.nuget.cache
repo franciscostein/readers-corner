@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "s1G5dTZzvARZXbl85e0dQLhwB2muv4CTUz2+ejuVbOYnwPgg0VxFBb+wtuwCZrCBdzjQZ2Jer0DMRqnCgRqCcg==",
+  "success": true,
+  "projectFilePath": "/home/leandro/Projects/readers-corner/servers/storage/storage.csproj",
+  "expectedPackageFiles": [
+    "/home/leandro/.nuget/packages/microsoft.extensions.apidescription.server/3.0.0/microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "/home/leandro/.nuget/packages/microsoft.openapi/1.2.3/microsoft.openapi.1.2.3.nupkg.sha512",
+    "/home/leandro/.nuget/packages/swashbuckle.aspnetcore/6.2.3/swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
+    "/home/leandro/.nuget/packages/swashbuckle.aspnetcore.swagger/6.2.3/swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
+    "/home/leandro/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.2.3/swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
+    "/home/leandro/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.2.3/swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512"
+  ],
+  "logs": []
+}
