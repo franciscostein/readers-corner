@@ -1,4 +1,4 @@
-namespace Core.Models
+namespace ReadersCorner.Core.Models
 {
     public class Author
     {
