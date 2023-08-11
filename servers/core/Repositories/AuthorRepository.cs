@@ -5,27 +5,27 @@ namespace ReadersCorner.Core.Repositories
 {
     public class AuthorRepository : IAuthorRepository
     {
-        public void AddAuthor(Author author)
+        public void Add(Author author)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteAuthor(int id)
+        public void Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Author GetAuthorById(int id)
+        public List<Author> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public List<Author> GetAuthors()
+        public Author GetById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateAuthor(Author author)
+        public void Update(Author author)
         {
             throw new NotImplementedException();
         }
