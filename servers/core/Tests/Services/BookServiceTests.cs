@@ -29,5 +29,20 @@ namespace ReadersCorner.Core.Tests.Services
 
             Assert.Equal(expectedBook, actualBook);
         }
+
+        [Fact]
+        public void GetBookById_InvalidId_ReturnsNull()
+        {
+            int invalidBookId = 0;
+
+            var mockRepository = new Mock<IBookRepository>();
+            mockRepository.Setup(repo => repo.GetById(invalidBookId)).Returns((Book)null);
+
+            var bookService = new BookService(mockRepository.Object);
+
+            var result = bookService.GetBookById(invalidBookId);
+
+            Assert.Null(result);
+        }
     }
 }
