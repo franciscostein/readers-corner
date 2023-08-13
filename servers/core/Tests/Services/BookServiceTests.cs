@@ -14,11 +14,7 @@ namespace ReadersCorner.Core.Tests.Services
         {
             int bookId = 1;
             var expectedBook = TestDataLoader.GetSingle<Book>();
-
-            var mockRepository = new Mock<IBookRepository>();
-            mockRepository.Setup(repo => repo.GetById(bookId)).Returns(expectedBook);
-
-            var bookService = new BookService(mockRepository.Object);
+            var bookService = MockBookService(bookId, expectedBook);
 
             var actualBook = bookService.GetBookById(bookId);
 
@@ -29,11 +25,7 @@ namespace ReadersCorner.Core.Tests.Services
         public void GetBookById_InvalidId_ReturnsNull()
         {
             int invalidBookId = 0;
-
-            var mockRepository = new Mock<IBookRepository>();
-            mockRepository.Setup(repo => repo.GetById(invalidBookId)).Returns((Book)null);
-
-            var bookService = new BookService(mockRepository.Object);
+            var bookService = MockBookService<Book>(invalidBookId, null);
 
             var result = bookService.GetBookById(invalidBookId);
 
@@ -43,7 +35,29 @@ namespace ReadersCorner.Core.Tests.Services
         [Fact]
         public void GetAllBooks_ReturnsListOfBooks()
         {
-            
+            var expectedBooks = TestDataLoader.GetList<Book>();
+            var bookService = MockBookService(null, expectedBooks);
+
+            var books = bookService.GetAllBooks();
+
+            Assert.Equal(expectedBooks, books);
+        }
+
+        private static BookService MockBookService<T>(int? bookId, T expectedReturn)
+        {
+            var mockRepository = new Mock<IBookRepository>();
+
+            switch (expectedReturn)
+            {
+                case Book:
+                    mockRepository.Setup(repo => repo.GetById((int)bookId)).Returns(expectedReturn as Book);
+                    break;
+                case List<Book>:
+                    mockRepository.Setup(repo => repo.GetAll()).Returns(expectedReturn as List<Book>);
+                    break;
+            }
+
+            return new BookService(mockRepository.Object);
         }
     }
 }
