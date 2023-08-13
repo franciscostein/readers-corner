@@ -25,7 +25,7 @@ namespace ReadersCorner.Core.Services
 
         public List<Book> GetAllBooks()
         {
-            throw new NotImplementedException();
+            return _bookRepository.GetAll();
         }
 
         public Book GetBookById(int bookId)

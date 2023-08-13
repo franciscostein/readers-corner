@@ -43,6 +43,16 @@ namespace ReadersCorner.Core.Tests.Services
             Assert.Equal(expectedBooks, books);
         }
 
+        [Fact]
+        public void GetAllBooks_EmptyRepository_ReturnsEmptyList()
+        {
+            var bookService = MockBookService(null, new List<Book>());
+
+            var result = bookService.GetAllBooks();
+
+            Assert.Empty(result);
+        }
+
         private static BookService MockBookService<T>(int? bookId, T expectedReturn)
         {
             var mockRepository = new Mock<IBookRepository>();
