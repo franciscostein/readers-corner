@@ -2,6 +2,7 @@ using Moq;
 using ReadersCorner.Core.Models;
 using ReadersCorner.Core.Repositories.Interfaces;
 using ReadersCorner.Core.Services;
+using ReadersCorner.Core.Tests.Services.Utils;
 using Xunit;
 
 namespace ReadersCorner.Core.Tests.Services
@@ -12,13 +13,7 @@ namespace ReadersCorner.Core.Tests.Services
         public void GetBookById_ValidId_ReturnCorrectBook()
         {
             int bookId = 1;
-            var expectedBook = new Book
-            {
-                Id = bookId,
-                Title = "Test Book",
-                Price = 9.7m,
-                Author = new Author { Id = 99, Name = "Author" }
-            };
+            var expectedBook = TestDataLoader.GetSingle<Book>();
 
             var mockRepository = new Mock<IBookRepository>();
             mockRepository.Setup(repo => repo.GetById(bookId)).Returns(expectedBook);
@@ -43,6 +38,12 @@ namespace ReadersCorner.Core.Tests.Services
             var result = bookService.GetBookById(invalidBookId);
 
             Assert.Null(result);
+        }
+
+        [Fact]
+        public void GetAllBooks_ReturnsListOfBooks()
+        {
+            
         }
     }
 }
