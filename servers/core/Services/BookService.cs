@@ -13,7 +13,7 @@ namespace ReadersCorner.Core.Services
             _bookRepository = bookRepository;
         }
 
-        public void AddBook(Book book)
+        public Book AddBook(Book book)
         {
             throw new NotImplementedException();
         }

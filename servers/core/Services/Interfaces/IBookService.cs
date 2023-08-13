@@ -6,7 +6,7 @@ namespace ReadersCorner.Core.Services.Interfaces
     {
         Book GetBookById(int it);
         List<Book> GetAllBooks();
-        void AddBook(Book book);
+        Book AddBook(Book book);
         void UpdateBook(Book book);
         void DeleteBook(int id);
     }
