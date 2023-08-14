@@ -2,7 +2,6 @@ using Moq;
 using ReadersCorner.Core.Models;
 using ReadersCorner.Core.Repositories.Interfaces;
 using ReadersCorner.Core.Services;
-using ReadersCorner.Core.Services.Interfaces;
 using ReadersCorner.Core.Tests.Services.Utils;
 using Xunit;
 
@@ -68,7 +67,7 @@ namespace ReadersCorner.Core.Tests.Services
         {
             var newBook = new Book { Title = "New Book" };
             var addedBook = new Book { Id = 5, Title = "New Book" };
-            var mock = MockRepository<Book>(Method.Add, null, null, newBook);
+            var mock = MockRepository<Book>(Method.Add, newBook, addedBook);
 
             var result = mock.BookService.AddBook(newBook);
 
@@ -76,20 +75,20 @@ namespace ReadersCorner.Core.Tests.Services
             mock.MockRepository.Verify(repo => repo.Add(newBook), Times.Once);
         }
 
-        private static MockedRepository MockRepository<T>(Method method, int? bookId, T expectedReturn, Book book = null)
+        private static MockedRepository MockRepository<T>(Method method, object input, T expectedReturn)
         {
             var mockRepository = new Mock<IBookRepository>();
 
             switch (method)
             {
                 case Method.GetById:
-                    mockRepository.Setup(repo => repo.GetById((int)bookId)).Returns(expectedReturn as Book);
+                    mockRepository.Setup(repo => repo.GetById((int)input)).Returns(expectedReturn as Book);
                     break;
                 case Method.GetAll:
                     mockRepository.Setup(repo => repo.GetAll()).Returns(expectedReturn as List<Book>);
                     break;
                 case Method.Add:
-                    mockRepository.Setup(repo => repo.Add(book));
+                    mockRepository.Setup(repo => repo.Add((Book)input)).Returns(expectedReturn as Book);
                     break;
             }
 

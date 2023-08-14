@@ -15,7 +15,7 @@ namespace ReadersCorner.Core.Services
 
         public Book AddBook(Book book)
         {
-            throw new NotImplementedException();
+            return _bookRepository.Add(book);
         }
 
         public void DeleteBook(int id)
