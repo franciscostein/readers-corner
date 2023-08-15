@@ -36,7 +36,7 @@ namespace ReadersCorner.Core.Services
             return _bookRepository.GetById(bookId);
         }
 
-        public void UpdateBook(Book book)
+        public Book UpdateBook(Book book)
         {
             throw new NotImplementedException();
         }
