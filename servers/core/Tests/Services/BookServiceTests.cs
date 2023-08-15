@@ -90,6 +90,9 @@ namespace ReadersCorner.Core.Tests.Services
                 case Method.Add:
                     mockRepository.Setup(repo => repo.Add((Book)input)).Returns(expectedReturn as Book);
                     break;
+                case Method.Update:
+                    mockRepository.Setup(repo => repo.Update((Book)input)).Returns(expectedReturn as Book);
+                    break;
             }
 
             var bookService = new BookService(mockRepository.Object);
