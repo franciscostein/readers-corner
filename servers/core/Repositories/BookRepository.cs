@@ -25,7 +25,7 @@ namespace ReadersCorner.Core.Repositories
             throw new NotImplementedException();
         }
 
-        public void Update(Book book)
+        public Book Update(Book entity)
         {
             throw new NotImplementedException();
         }
