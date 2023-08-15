@@ -15,6 +15,9 @@ namespace ReadersCorner.Core.Services
 
         public Book AddBook(Book book)
         {
+            if (book == null)
+                return new Book();
+
             return _bookRepository.Add(book);
         }
 

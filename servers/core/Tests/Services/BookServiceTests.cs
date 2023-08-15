@@ -9,15 +9,6 @@ namespace ReadersCorner.Core.Tests.Services
 {
     public class BookServiceTests
     {
-        enum Method
-        {
-            GetById,
-            GetAll,
-            Add,
-            Update,
-            Delete
-        }
-
         [Fact]
         public void GetBookById_ValidId_ReturnCorrectBook()
         {
@@ -72,7 +63,16 @@ namespace ReadersCorner.Core.Tests.Services
             var result = mock.BookService.AddBook(newBook);
 
             Assert.Equal(addedBook, result);
-            mock.MockRepository.Verify(repo => repo.Add(newBook), Times.Once);
+            mock.Repository.Verify(repo => repo.Add(newBook), Times.Once);
+        }
+
+        [Fact]
+        public void AddBook_NullBookArgument_DoesNotThrow()
+        {
+            var mock = MockRepository<Book>(Method.Add, null, null);
+
+            Assert.Null(Record.Exception(() => mock.BookService.AddBook(null)));
+            mock.Repository.Verify(repo => repo.Add(It.IsAny<Book>()), Times.Never);
         }
 
         private static MockedRepository MockRepository<T>(Method method, object input, T expectedReturn)
@@ -101,12 +101,21 @@ namespace ReadersCorner.Core.Tests.Services
         {
             public MockedRepository(Mock<IBookRepository> mockRepository, BookService bookService)
             {
-                MockRepository = mockRepository;
+                Repository = mockRepository;
                 BookService = bookService;
             }
 
-            public Mock<IBookRepository> MockRepository { get; }
+            public Mock<IBookRepository> Repository { get; }
             public BookService BookService { get; }
+        }
+
+        enum Method
+        {
+            GetById,
+            GetAll,
+            Add,
+            Update,
+            Delete
         }
     }
 }
