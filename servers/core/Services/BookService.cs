@@ -38,7 +38,7 @@ namespace ReadersCorner.Core.Services
 
         public Book UpdateBook(Book book)
         {
-            throw new NotImplementedException();
+            return _bookRepository.Update(book);
         }
     }
 }
