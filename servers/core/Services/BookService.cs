@@ -13,9 +13,12 @@ namespace ReadersCorner.Core.Services
             _bookRepository = bookRepository;
         }
 
-        public void AddBook(Book book)
+        public Book AddBook(Book book)
         {
-            throw new NotImplementedException();
+            if (book == null)
+                return new Book();
+
+            return _bookRepository.Add(book);
         }
 
         public void DeleteBook(int id)

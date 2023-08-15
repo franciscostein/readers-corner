@@ -4,7 +4,7 @@ namespace ReadersCorner.Core.Repositories.Interfaces
     {
         TEntity GetById(int id);
         List<TEntity> GetAll();
-        void Add(TEntity entity);
+        TEntity Add(TEntity entity);
         void Update(TEntity entity);
         void Delete(int id);
     }

@@ -5,7 +5,7 @@ namespace ReadersCorner.Core.Repositories
 {
     public class AuthorRepository : IAuthorRepository
     {
-        public void Add(Author author)
+        public Author Add(Author entity)
         {
             throw new NotImplementedException();
         }

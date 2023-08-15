@@ -14,9 +14,9 @@ namespace ReadersCorner.Core.Tests.Services
         {
             int bookId = 1;
             var expectedBook = TestDataLoader.GetSingle<Book>();
-            var bookService = MockBookService(bookId, expectedBook);
+            var mock = MockRepository(Method.GetById, bookId, expectedBook);
 
-            var actualBook = bookService.GetBookById(bookId);
+            var actualBook = mock.BookService.GetBookById(bookId);
 
             Assert.Equal(expectedBook, actualBook);
         }
@@ -25,9 +25,9 @@ namespace ReadersCorner.Core.Tests.Services
         public void GetBookById_InvalidId_ReturnsNull()
         {
             int invalidBookId = 0;
-            var bookService = MockBookService<Book>(invalidBookId, null);
+            var mock = MockRepository<Book>(Method.GetById, invalidBookId, null);
 
-            var result = bookService.GetBookById(invalidBookId);
+            var result = mock.BookService.GetBookById(invalidBookId);
 
             Assert.Null(result);
         }
@@ -36,9 +36,9 @@ namespace ReadersCorner.Core.Tests.Services
         public void GetAllBooks_ReturnsListOfBooks()
         {
             var expectedBooks = TestDataLoader.GetList<Book>();
-            var bookService = MockBookService(null, expectedBooks);
+            var mock = MockRepository(Method.GetAll, null, expectedBooks);
 
-            var books = bookService.GetAllBooks();
+            var books = mock.BookService.GetAllBooks();
 
             Assert.Equal(expectedBooks, books);
         }
@@ -46,28 +46,76 @@ namespace ReadersCorner.Core.Tests.Services
         [Fact]
         public void GetAllBooks_EmptyRepository_ReturnsEmptyList()
         {
-            var bookService = MockBookService(null, new List<Book>());
+            var mock = MockRepository(Method.GetAll, null, new List<Book>());
 
-            var result = bookService.GetAllBooks();
+            var result = mock.BookService.GetAllBooks();
 
             Assert.Empty(result);
         }
 
-        private static BookService MockBookService<T>(int? bookId, T expectedReturn)
+        [Fact]
+        public void AddBook_SuccessfulAddition()
+        {
+            var newBook = new Book { Title = "New Book" };
+            var addedBook = new Book { Id = 5, Title = "New Book" };
+            var mock = MockRepository<Book>(Method.Add, newBook, addedBook);
+
+            var result = mock.BookService.AddBook(newBook);
+
+            Assert.Equal(addedBook, result);
+            mock.Repository.Verify(repo => repo.Add(newBook), Times.Once);
+        }
+
+        [Fact]
+        public void AddBook_NullBookArgument_DoesNotThrow()
+        {
+            var mock = MockRepository<Book>(Method.Add, null, null);
+
+            Assert.Null(Record.Exception(() => mock.BookService.AddBook(null)));
+            mock.Repository.Verify(repo => repo.Add(It.IsAny<Book>()), Times.Never);
+        }
+
+        private static MockedRepository MockRepository<T>(Method method, object input, T expectedReturn)
         {
             var mockRepository = new Mock<IBookRepository>();
 
-            switch (expectedReturn)
+            switch (method)
             {
-                case Book:
-                    mockRepository.Setup(repo => repo.GetById((int)bookId)).Returns(expectedReturn as Book);
+                case Method.GetById:
+                    mockRepository.Setup(repo => repo.GetById((int)input)).Returns(expectedReturn as Book);
                     break;
-                case List<Book>:
+                case Method.GetAll:
                     mockRepository.Setup(repo => repo.GetAll()).Returns(expectedReturn as List<Book>);
+                    break;
+                case Method.Add:
+                    mockRepository.Setup(repo => repo.Add((Book)input)).Returns(expectedReturn as Book);
                     break;
             }
 
-            return new BookService(mockRepository.Object);
+            var bookService = new BookService(mockRepository.Object);
+
+            return new MockedRepository(mockRepository, bookService);
+        }
+
+        private class MockedRepository
+        {
+            public MockedRepository(Mock<IBookRepository> mockRepository, BookService bookService)
+            {
+                Repository = mockRepository;
+                BookService = bookService;
+            }
+
+            public Mock<IBookRepository> Repository { get; }
+            public BookService BookService { get; }
+        }
+
+        enum Method
+        {
+            GetById,
+            GetAll,
+            Add,
+            Update,
+            Delete
         }
     }
 }

@@ -5,7 +5,7 @@ namespace ReadersCorner.Core.Repositories
 {
     public class BookRepository : IBookRepository
     {
-        public void Add(Book book)
+        public Book Add(Book book)
         {
             throw new NotImplementedException();
         }
