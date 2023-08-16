@@ -1,0 +1,29 @@
+[
+	{
+		"id": 1,
+		"title": "Test Book 1",
+		"price": 9.7,
+		"author": {
+			"id": 99,
+			"name": "Author A"
+		}
+	},
+	{
+		"id": 2,
+		"title": "Test Book 2",
+		"price": 13.99,
+		"author": {
+			"id": 101,
+			"name": "Author B"
+		}
+	},
+	{
+		"id": 3,
+		"title": "Test Book 3",
+		"price": 15.0,
+		"author": {
+			"id": 99,
+			"name": "Author A"
+		}
+	}
+]

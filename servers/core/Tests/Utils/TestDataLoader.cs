@@ -4,22 +4,16 @@ namespace ReadersCorner.Core.Tests.Services.Utils
 {
     public static class TestDataLoader
     {
-        private class TestData<T>
-        {
-            public T Single { get; set; }
-            public List<T> List { get; set; }
-        }
+        public static T GetSingle<T>() => GetTestData<T>(typeof(T).Name);
+
+        public static List<T> GetList<T>() => GetTestData<List<T>>($"{typeof(T).Name}s");
+
+        private static T GetTestData<T>(string className) => LoadTestData<T>($"{className}.json");
 
         private static T LoadTestData<T>(string jsonFileName)
         {
             var json = File.ReadAllText($"../../../Tests/Data/{jsonFileName}");
-            return JsonSerializer.Deserialize<T>(json);
+            return JsonSerializer.Deserialize<T>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
-
-        public static T GetSingle<T>() => GetTestData<T>().Single;
-
-        public static List<T> GetList<T>() => GetTestData<T>().List;
-
-        private static TestData<T> GetTestData<T>() => LoadTestData<TestData<T>>($"{typeof(T).Name}.json");
     }
 }
