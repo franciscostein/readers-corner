@@ -87,6 +87,15 @@ namespace ReadersCorner.Core.Tests.Services
             mock.Repository.Verify(repo => repo.Update(updatedBook), Times.Once);
         }
 
+        [Fact]
+        public void UpdateBook_NullBookArgument_DoesNotThrow()
+        {
+            var mock = MockRepository<Book>(Method.Update, null, null);
+
+            Assert.Null(Record.Exception(() => mock.BookService.UpdateBook(null)));
+            mock.Repository.Verify(repo => repo.Update(It.IsAny<Book>()), Times.Never);
+        }
+
         private static MockedRepository MockRepository<T>(Method method, object input, T expectedReturn)
         {
             var mockRepository = new Mock<IBookRepository>();
