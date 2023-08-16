@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using ReadersCorner.Core.Models;
 using ReadersCorner.Core.Repositories.Interfaces;
 using ReadersCorner.Core.Services.Interfaces;
@@ -7,7 +8,7 @@ namespace ReadersCorner.Core.Services
     public class BookService : IBookService
     {
         private readonly IBookRepository _bookRepository;
-        
+
         public BookService(IBookRepository bookRepository)
         {
             _bookRepository = bookRepository;
@@ -38,6 +39,9 @@ namespace ReadersCorner.Core.Services
 
         public Book UpdateBook(Book book)
         {
+            if (book == null)
+                return new Book();
+
             return _bookRepository.Update(book);
         }
     }
