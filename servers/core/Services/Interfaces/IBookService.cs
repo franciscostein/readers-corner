@@ -8,6 +8,6 @@ namespace ReadersCorner.Core.Services.Interfaces
         List<Book> GetAllBooks();
         Book AddBook(Book book);
         Book UpdateBook(Book book);
-        void DeleteBook(int id);
+        bool DeleteBook(int id);
     }
 }

@@ -1,4 +1,3 @@
-using System.Net.Http.Headers;
 using ReadersCorner.Core.Models;
 using ReadersCorner.Core.Repositories.Interfaces;
 using ReadersCorner.Core.Services.Interfaces;
@@ -22,7 +21,7 @@ namespace ReadersCorner.Core.Services
             return _bookRepository.Add(book);
         }
 
-        public void DeleteBook(int id)
+        public bool DeleteBook(int id)
         {
             throw new NotImplementedException();
         }

@@ -96,6 +96,18 @@ namespace ReadersCorner.Core.Tests.Services
             mock.Repository.Verify(repo => repo.Update(It.IsAny<Book>()), Times.Never);
         }
 
+        [Fact]
+        public void DeleteBook_SuccessfulDeletion()
+        {
+            var bookIdToDelete = 1;
+            var mock = MockRepository(Method.Delete, bookIdToDelete, true);
+
+            var result = mock.BookService.DeleteBook(bookIdToDelete);
+
+            Assert.True(result);
+            mock.Repository.Verify(repo => repo.Delete(bookIdToDelete), Times.Once);
+        }
+
         private static MockedRepository MockRepository(Method method, object input, object expectedReturn)
         {
             var mockRepository = new Mock<IBookRepository>();
