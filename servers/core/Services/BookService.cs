@@ -23,7 +23,7 @@ namespace ReadersCorner.Core.Services
 
         public bool DeleteBook(int id)
         {
-            throw new NotImplementedException();
+            return _bookRepository.Delete(id);
         }
 
         public List<Book> GetAllBooks()
