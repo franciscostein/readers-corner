@@ -6,6 +6,6 @@ namespace ReadersCorner.Core.Repositories.Interfaces
         List<TEntity> GetAll();
         TEntity Add(TEntity entity);
         TEntity Update(TEntity entity);
-        void Delete(int id);
+        bool Delete(int id);
     }
 }

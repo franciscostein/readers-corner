@@ -25,7 +25,7 @@ namespace ReadersCorner.Core.Tests.Services
         public void GetBookById_InvalidId_ReturnsNull()
         {
             int invalidBookId = 0;
-            var mock = MockRepository<Book>(Method.GetById, invalidBookId, null);
+            var mock = MockRepository(Method.GetById, invalidBookId, null);
 
             var result = mock.BookService.GetBookById(invalidBookId);
 
@@ -58,7 +58,7 @@ namespace ReadersCorner.Core.Tests.Services
         {
             var newBook = new Book { Title = "New Book" };
             var addedBook = new Book { Id = 5, Title = "New Book" };
-            var mock = MockRepository<Book>(Method.Add, newBook, addedBook);
+            var mock = MockRepository(Method.Add, newBook, addedBook);
 
             var result = mock.BookService.AddBook(newBook);
 
@@ -69,7 +69,7 @@ namespace ReadersCorner.Core.Tests.Services
         [Fact]
         public void AddBook_NullBookArgument_DoesNotThrow()
         {
-            var mock = MockRepository<Book>(Method.Add, null, null);
+            var mock = MockRepository(Method.Add, null, null);
 
             Assert.Null(Record.Exception(() => mock.BookService.AddBook(null)));
             mock.Repository.Verify(repo => repo.Add(It.IsAny<Book>()), Times.Never);
@@ -79,7 +79,7 @@ namespace ReadersCorner.Core.Tests.Services
         public void UpdateBook_SuccessfulUpdate()
         {
             var updatedBook = TestDataLoader.GetSingle<Book>();
-            var mock = MockRepository<Book>(Method.Update, updatedBook, updatedBook);
+            var mock = MockRepository(Method.Update, updatedBook, updatedBook);
 
             var result = mock.BookService.UpdateBook(updatedBook);
 
@@ -90,29 +90,32 @@ namespace ReadersCorner.Core.Tests.Services
         [Fact]
         public void UpdateBook_NullBookArgument_DoesNotThrow()
         {
-            var mock = MockRepository<Book>(Method.Update, null, new Book());
+            var mock = MockRepository(Method.Update, null, new Book());
 
             Assert.Null(Record.Exception(() => mock.BookService.UpdateBook(null)));
             mock.Repository.Verify(repo => repo.Update(It.IsAny<Book>()), Times.Never);
         }
 
-        private static MockedRepository MockRepository<T>(Method method, object input, T expectedReturn)
+        private static MockedRepository MockRepository(Method method, object input, object expectedReturn)
         {
             var mockRepository = new Mock<IBookRepository>();
 
             switch (method)
             {
                 case Method.GetById:
-                    mockRepository.Setup(repo => repo.GetById((int)input)).Returns(expectedReturn as Book);
+                    mockRepository.Setup(repo => repo.GetById((int)input)).Returns((Book)expectedReturn);
                     break;
                 case Method.GetAll:
-                    mockRepository.Setup(repo => repo.GetAll()).Returns(expectedReturn as List<Book>);
+                    mockRepository.Setup(repo => repo.GetAll()).Returns((List<Book>)expectedReturn);
                     break;
                 case Method.Add:
-                    mockRepository.Setup(repo => repo.Add((Book)input)).Returns(expectedReturn as Book);
+                    mockRepository.Setup(repo => repo.Add((Book)input)).Returns((Book)expectedReturn);
                     break;
                 case Method.Update:
-                    mockRepository.Setup(repo => repo.Update((Book)input)).Returns(expectedReturn as Book);
+                    mockRepository.Setup(repo => repo.Update((Book)input)).Returns((Book)expectedReturn);
+                    break;
+                case Method.Delete:
+                    mockRepository.Setup(repo => repo.Delete((int)input)).Returns((bool)expectedReturn);
                     break;
             }
 
