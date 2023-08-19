@@ -16,7 +16,7 @@ namespace ReadersCorner.Core.Tests.Services
         }
 
         [Fact]
-        public void GetBookById_ValidId_ReturnCorrectBook()
+        public void GetById_ValidId_ReturnCorrectBook()
         {
             int bookId = 1;
             var expectedBook = TestDataLoader.GetSingle<Book>();
@@ -28,7 +28,7 @@ namespace ReadersCorner.Core.Tests.Services
         }
 
         [Fact]
-        public void GetBookById_InvalidId_ReturnsNull()
+        public void GetById_InvalidId_ReturnsNull()
         {
             int invalidBookId = 0;
             var mock = _mockedRepository.Create(Method.GetById, invalidBookId, null);
