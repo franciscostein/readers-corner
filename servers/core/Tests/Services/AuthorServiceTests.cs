@@ -16,6 +16,7 @@ namespace ReadersCorner.Core.Tests.Services
 
         [Theory]
         [InlineData(1)]
+        [InlineData(3)]
         public void GetById_ValidId_ReturnsCorrectAuthor(int authorId)
         {
             var expectedAuthor = TestDataLoader.GetSingle<Author>();
@@ -28,6 +29,7 @@ namespace ReadersCorner.Core.Tests.Services
 
         [Theory]
         [InlineData(0)]
+        [InlineData(-1)]
         public void GetById_InvalidId_ReturnsNull(int invalidAuthorId)
         {
             var mock = _mockedRepository.Create(Method.GetById, invalidAuthorId, null);
@@ -43,9 +45,20 @@ namespace ReadersCorner.Core.Tests.Services
             var expectedAuthors = TestDataLoader.GetList<Author>();
             var mock = _mockedRepository.Create(Method.GetAll, null, expectedAuthors);
 
+            var authors = mock.AuthorService.GetAll();
+
+            Assert.Equal(expectedAuthors, authors);
+            Assert.Equal(expectedAuthors.Count, authors.Count);
+        }
+
+        [Fact]
+        public void GetAll_EmptyRepository_ReturnsEmptyList()
+        {
+            var mock = _mockedRepository.Create(Method.GetAll, null, new List<Author>());
+
             var result = mock.AuthorService.GetAll();
 
-            Assert.Equal(expectedAuthors, result);
+            Assert.Empty(result);
         }
     }
 }

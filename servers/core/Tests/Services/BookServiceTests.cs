@@ -47,6 +47,7 @@ namespace ReadersCorner.Core.Tests.Services
             var books = mock.BookService.GetAll();
 
             Assert.Equal(expectedBooks, books);
+            Assert.Equal(expectedBooks, books);
         }
 
         [Fact]
