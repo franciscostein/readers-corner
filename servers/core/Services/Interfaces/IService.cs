@@ -1,6 +1,6 @@
-namespace ReadersCorner.Core.Repositories.Interfaces
+namespace ReadersCorner.Core.Services.Interfaces
 {
-    public interface IRepository<TModel>
+    public interface IService<TModel>
     {
         TModel GetById(int id);
         List<TModel> GetAll();
