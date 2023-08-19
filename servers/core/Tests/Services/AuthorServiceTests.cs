@@ -36,5 +36,16 @@ namespace ReadersCorner.Core.Tests.Services
 
             Assert.Null(result);
         }
+
+        [Fact]
+        public void GetAll_ReturnsListOfAuthors()
+        {
+            var expectedAuthors = TestDataLoader.GetList<Author>();
+            var mock = _mockedRepository.Create(Method.GetAll, null, expectedAuthors);
+
+            var result = mock.AuthorService.GetAll();
+
+            Assert.Equal(expectedAuthors, result);
+        }
     }
 }

@@ -39,7 +39,7 @@ namespace ReadersCorner.Core.Tests.Services
         }
 
         [Fact]
-        public void GetAllBooks_ReturnsListOfBooks()
+        public void GetAll_ReturnsListOfBooks()
         {
             var expectedBooks = TestDataLoader.GetList<Book>();
             var mock = _mockedRepository.Create(Method.GetAll, null, expectedBooks);
@@ -50,7 +50,7 @@ namespace ReadersCorner.Core.Tests.Services
         }
 
         [Fact]
-        public void GetAllBooks_EmptyRepository_ReturnsEmptyList()
+        public void GetAll_EmptyRepository_ReturnsEmptyList()
         {
             var mock = _mockedRepository.Create(Method.GetAll, null, new List<Book>());
 
