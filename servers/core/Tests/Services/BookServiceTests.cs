@@ -8,7 +8,7 @@ namespace ReadersCorner.Core.Tests.Services
 {
     public class BookServiceTests
     {
-        private MockedRepositoryFactory<Book> _mockedRepository;
+        private readonly MockedRepositoryFactory<Book> _mockedRepository;
 
         public BookServiceTests()
         {
