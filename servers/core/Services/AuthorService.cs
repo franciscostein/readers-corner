@@ -1,31 +1,43 @@
 using ReadersCorner.Core.Models;
+using ReadersCorner.Core.Repositories.Interfaces;
 using ReadersCorner.Core.Services.Interfaces;
 
 namespace ReadersCorner.Core.Services
 {
     public class AuthorService : IAuthorService
     {
-        public void AddAuthor(Author author)
+        private readonly IRepository<Author> _repository;
+
+        public AuthorService()
+        {
+        }
+
+        public AuthorService(IRepository<Author> repository)
+        {
+            _repository = repository;
+        }
+
+        public Author Add(Author model)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteAuthor(int id)
+        public bool Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Author GetAuthorById(int id)
+        public List<Author> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public List<Author> GetAuthors()
+        public Author GetById(int it)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateAuthor(Author author)
+        public Author Update(Author model)
         {
             throw new NotImplementedException();
         }
