@@ -8,12 +8,16 @@ namespace ReadersCorner.Core.Services
     {
         private readonly IBookRepository _bookRepository;
 
+        public BookService()
+        {
+        }
+
         public BookService(IBookRepository bookRepository)
         {
             _bookRepository = bookRepository;
         }
 
-        public Book AddBook(Book book)
+        public Book Add(Book book)
         {
             if (book == null)
                 return new Book();
@@ -21,22 +25,22 @@ namespace ReadersCorner.Core.Services
             return _bookRepository.Add(book);
         }
 
-        public bool DeleteBook(int id)
+        public bool Delete(int bookId)
         {
-            return _bookRepository.Delete(id);
+            return _bookRepository.Delete(bookId);
         }
 
-        public List<Book> GetAllBooks()
+        public List<Book> GetAll()
         {
             return _bookRepository.GetAll();
         }
 
-        public Book GetBookById(int bookId)
+        public Book GetById(int bookId)
         {
             return _bookRepository.GetById(bookId);
         }
 
-        public Book UpdateBook(Book book)
+        public Book Update(Book book)
         {
             if (book == null)
                 return new Book();

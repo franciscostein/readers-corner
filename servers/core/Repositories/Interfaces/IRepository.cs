@@ -1,11 +1,11 @@
 namespace ReadersCorner.Core.Repositories.Interfaces
 {
-    public interface IRepository<TEntity>
+    public interface IRepository<TModel>
     {
-        TEntity GetById(int id);
-        List<TEntity> GetAll();
-        TEntity Add(TEntity entity);
-        TEntity Update(TEntity entity);
+        TModel GetById(int id);
+        List<TModel> GetAll();
+        TModel Add(TModel entity);
+        TModel Update(TModel entity);
         bool Delete(int id);
     }
 }
