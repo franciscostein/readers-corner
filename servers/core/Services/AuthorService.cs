@@ -28,9 +28,9 @@ namespace ReadersCorner.Core.Services
             throw new NotImplementedException();
         }
 
-        public Author GetById(int it)
+        public Author GetById(int authorId)
         {
-            throw new NotImplementedException();
+            return _repository.GetById(authorId);
         }
 
         public Author Update(Author model)
