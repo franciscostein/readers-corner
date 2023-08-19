@@ -6,13 +6,9 @@ namespace ReadersCorner.Core.Services
 {
     public class AuthorService : IAuthorService
     {
-        private readonly IRepository<Author> _repository;
+        private readonly IAuthorRepository _repository;
 
-        public AuthorService()
-        {
-        }
-
-        public AuthorService(IRepository<Author> repository)
+        public AuthorService(IAuthorRepository repository)
         {
             _repository = repository;
         }

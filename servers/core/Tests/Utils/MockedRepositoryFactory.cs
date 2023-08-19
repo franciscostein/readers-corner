@@ -1,18 +1,29 @@
 using Moq;
 using ReadersCorner.Core.Models;
-using ReadersCorner.Core.Repositories;
 using ReadersCorner.Core.Repositories.Interfaces;
 using ReadersCorner.Core.Services;
+using ReadersCorner.Core.Services.Interfaces;
 
 namespace ReadersCorner.Core.Tests.Utils
 {
     public class MockedRepositoryFactory<TModel> where TModel : class
     {
-        private readonly Mock<IRepository<TModel>> _mockRepository;
+        private Mock<IRepository<TModel>> _mockRepository;
 
         public MockedRepositoryFactory()
         {
             _mockRepository = new Mock<IRepository<TModel>>();
+
+            if (typeof(TModel) == typeof(Book))
+            {
+                var bookRepositoryMock = new Mock<IBookRepository>();
+                _mockRepository = bookRepositoryMock.As<IRepository<TModel>>();
+            }
+            else if (typeof(TModel) == typeof(Author))
+            {
+                var authorRepositoryMock = new Mock<IBookRepository>();
+                _mockRepository = authorRepositoryMock.As<IRepository<TModel>>();
+            }
         }
 
         public MockedRepository<TModel> Create(Method method, object input, object expectedReturn)
@@ -38,12 +49,12 @@ namespace ReadersCorner.Core.Tests.Utils
 
             if (typeof(TModel) == typeof(Book))
             {
-                var service = new BookService((BookRepository)_mockRepository.Object);
+                var service = new BookService((IBookRepository)_mockRepository.Object);
                 return new MockedRepository<TModel>(_mockRepository, service);
             }
             else if (typeof(TModel) == typeof(Author))
             {
-                var service = new AuthorService((AuthorRepository)_mockRepository.Object);
+                var service = new AuthorService((IAuthorRepository)_mockRepository.Object);
                 return new MockedRepository<TModel>(_mockRepository, service);
             }
 
@@ -57,21 +68,21 @@ namespace ReadersCorner.Core.Tests.Utils
         {
         }
 
-        public MockedRepository(Mock<IRepository<TModel>> repository, BookService service)
+        public MockedRepository(Mock<IRepository<TModel>> repository, IBookService service)
         {
             Repository = repository;
             BookService = service;
         }
 
-        public MockedRepository(Mock<IRepository<TModel>> repository, AuthorService service)
+        public MockedRepository(Mock<IRepository<TModel>> repository, IAuthorService service)
         {
             Repository = repository;
             AuthorService = service;
         }
 
         public Mock<IRepository<TModel>> Repository { get; }
-        public BookService BookService { get; }
-        public AuthorService AuthorService { get; }
+        public IBookService BookService { get; }
+        public IAuthorService AuthorService { get; }
     }
 
     public enum Method

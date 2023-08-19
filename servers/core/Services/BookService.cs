@@ -8,10 +8,6 @@ namespace ReadersCorner.Core.Services
     {
         private readonly IBookRepository _bookRepository;
 
-        public BookService()
-        {
-        }
-
         public BookService(IBookRepository bookRepository)
         {
             _bookRepository = bookRepository;
