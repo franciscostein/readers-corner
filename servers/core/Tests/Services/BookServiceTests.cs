@@ -8,7 +8,7 @@ namespace ReadersCorner.Core.Tests.Services
 {
     public class BookServiceTests
     {
-        private MockedRepositoryFactory<Book> _mockedRepository;
+        private readonly MockedRepositoryFactory<Book> _mockedRepository;
 
         public BookServiceTests()
         {
@@ -16,7 +16,7 @@ namespace ReadersCorner.Core.Tests.Services
         }
 
         [Fact]
-        public void GetBookById_ValidId_ReturnCorrectBook()
+        public void GetById_ValidId_ReturnCorrectBook()
         {
             int bookId = 1;
             var expectedBook = TestDataLoader.GetSingle<Book>();
@@ -28,7 +28,7 @@ namespace ReadersCorner.Core.Tests.Services
         }
 
         [Fact]
-        public void GetBookById_InvalidId_ReturnsNull()
+        public void GetById_InvalidId_ReturnsNull()
         {
             int invalidBookId = 0;
             var mock = _mockedRepository.Create(Method.GetById, invalidBookId, null);
@@ -39,7 +39,7 @@ namespace ReadersCorner.Core.Tests.Services
         }
 
         [Fact]
-        public void GetAllBooks_ReturnsListOfBooks()
+        public void GetAll_ReturnsListOfBooks()
         {
             var expectedBooks = TestDataLoader.GetList<Book>();
             var mock = _mockedRepository.Create(Method.GetAll, null, expectedBooks);
@@ -47,10 +47,11 @@ namespace ReadersCorner.Core.Tests.Services
             var books = mock.BookService.GetAll();
 
             Assert.Equal(expectedBooks, books);
+            Assert.Equal(expectedBooks, books);
         }
 
         [Fact]
-        public void GetAllBooks_EmptyRepository_ReturnsEmptyList()
+        public void GetAll_EmptyRepository_ReturnsEmptyList()
         {
             var mock = _mockedRepository.Create(Method.GetAll, null, new List<Book>());
 

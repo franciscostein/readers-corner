@@ -21,7 +21,7 @@ namespace ReadersCorner.Core.Tests.Utils
             }
             else if (typeof(TModel) == typeof(Author))
             {
-                var authorRepositoryMock = new Mock<IBookRepository>();
+                var authorRepositoryMock = new Mock<IAuthorRepository>();
                 _mockRepository = authorRepositoryMock.As<IRepository<TModel>>();
             }
         }
