@@ -104,5 +104,17 @@ namespace ReadersCorner.Core.Tests.Services
             Assert.Null(Record.Exception(() => mock.AuthorService.Update(null)));
             mock.Repository.Verify(repo => repo.Update(It.IsAny<Author>()), Times.Never);
         }
+
+        [Theory]
+        [InlineData(1)]
+        public void Delete_SuccessfulDeletion(int authorId)
+        {
+            var mock = _mockedRepository.Create(Method.Delete, authorId, true);
+
+            var result = mock.AuthorService.Delete(authorId);
+
+            Assert.True(result);
+            mock.Repository.Verify(repo => repo.Delete(authorId), Times.Once);
+        }
     }
 }

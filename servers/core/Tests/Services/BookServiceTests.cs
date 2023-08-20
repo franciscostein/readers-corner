@@ -104,7 +104,7 @@ namespace ReadersCorner.Core.Tests.Services
         }
 
         [Fact]
-        public void DeleteBook_SuccessfulDeletion()
+        public void Delete_SuccessfulDeletion()
         {
             var bookIdToDelete = 1;
             var mock = _mockedRepository.Create(Method.Delete, bookIdToDelete, true);
@@ -116,7 +116,7 @@ namespace ReadersCorner.Core.Tests.Services
         }
 
         [Fact]
-        public void DeleteBook_InvalidId_ReturnsFalse()
+        public void Delete_InvalidId_ReturnsFalse()
         {
             var invalidBookId = -1;
             var mock = _mockedRepository.Create(Method.Delete, invalidBookId, false);
