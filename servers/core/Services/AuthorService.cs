@@ -21,9 +21,9 @@ namespace ReadersCorner.Core.Services
             return _repository.Add(author);
         }
 
-        public bool Delete(int id)
+        public bool Delete(int authorId)
         {
-            throw new NotImplementedException();
+            return _repository.Delete(authorId);
         }
 
         public List<Author> GetAll()
