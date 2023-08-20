@@ -99,7 +99,7 @@ namespace ReadersCorner.Core.Tests.Services
         [Fact]
         public void Update_NullAuthorArgument_DoesNotThrow()
         {
-            var mock = _mockedRepository.Create(Method.Update, null, new Book());
+            var mock = _mockedRepository.Create(Method.Update, null, new Author());
 
             Assert.Null(Record.Exception(() => mock.AuthorService.Update(null)));
             mock.Repository.Verify(repo => repo.Update(It.IsAny<Author>()), Times.Never);

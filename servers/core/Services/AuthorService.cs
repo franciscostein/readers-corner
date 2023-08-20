@@ -38,6 +38,9 @@ namespace ReadersCorner.Core.Services
 
         public Author Update(Author author)
         {
+            if (author == null)
+                return new Author();
+
             return _repository.Update(author);
         }
     }
