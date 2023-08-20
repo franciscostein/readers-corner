@@ -71,7 +71,7 @@ namespace ReadersCorner.Core.Tests.Services
 
             var result = mock.AuthorService.Add(newAuthor);
 
-            Assert.Equal(newAuthor, result);
+            Assert.Equal(addedAuthor, result);
             mock.Repository.Verify(repo => repo.Add(newAuthor), Times.Once());
         }
     }

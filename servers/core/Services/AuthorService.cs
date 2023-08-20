@@ -13,9 +13,9 @@ namespace ReadersCorner.Core.Services
             _repository = repository;
         }
 
-        public Author Add(Author model)
+        public Author Add(Author author)
         {
-            throw new NotImplementedException();
+            return _repository.Add(author);
         }
 
         public bool Delete(int id)
