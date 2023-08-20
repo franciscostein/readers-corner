@@ -15,6 +15,9 @@ namespace ReadersCorner.Core.Services
 
         public Author Add(Author author)
         {
+            if (author == null)
+                return new Author();
+                
             return _repository.Add(author);
         }
 
