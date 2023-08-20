@@ -17,7 +17,7 @@ namespace ReadersCorner.Core.Services
         {
             if (author == null)
                 return new Author();
-                
+
             return _repository.Add(author);
         }
 
@@ -36,9 +36,9 @@ namespace ReadersCorner.Core.Services
             return _repository.GetById(authorId);
         }
 
-        public Author Update(Author model)
+        public Author Update(Author author)
         {
-            throw new NotImplementedException();
+            return _repository.Update(author);
         }
     }
 }
