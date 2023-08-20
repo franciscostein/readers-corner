@@ -83,7 +83,7 @@ namespace ReadersCorner.Core.Tests.Services
         }
 
         [Fact]
-        public void UpdateBook_SuccessfulUpdate()
+        public void Update_SuccessfulUpdate()
         {
             var updatedBook = TestDataLoader.GetSingle<Book>();
             var mock = _mockedRepository.Create(Method.Update, updatedBook, updatedBook);
@@ -95,7 +95,7 @@ namespace ReadersCorner.Core.Tests.Services
         }
 
         [Fact]
-        public void UpdateBook_NullBookArgument_DoesNotThrow()
+        public void Update_NullBookArgument_DoesNotThrow()
         {
             var mock = _mockedRepository.Create(Method.Update, null, new Book());
 
