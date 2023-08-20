@@ -13,14 +13,17 @@ namespace ReadersCorner.Core.Services
             _repository = repository;
         }
 
-        public Author Add(Author model)
+        public Author Add(Author author)
         {
-            throw new NotImplementedException();
+            if (author == null)
+                return new Author();
+
+            return _repository.Add(author);
         }
 
-        public bool Delete(int id)
+        public bool Delete(int authorId)
         {
-            throw new NotImplementedException();
+            return _repository.Delete(authorId);
         }
 
         public List<Author> GetAll()
@@ -33,9 +36,12 @@ namespace ReadersCorner.Core.Services
             return _repository.GetById(authorId);
         }
 
-        public Author Update(Author model)
+        public Author Update(Author author)
         {
-            throw new NotImplementedException();
+            if (author == null)
+                return new Author();
+
+            return _repository.Update(author);
         }
     }
 }

@@ -61,7 +61,7 @@ namespace ReadersCorner.Core.Tests.Services
         }
 
         [Fact]
-        public void AddBook_SuccessfulAddition()
+        public void Add_SuccessfulAddition()
         {
             var newBook = new Book { Title = "New Book" };
             var addedBook = new Book { Id = 5, Title = "New Book" };
@@ -74,7 +74,7 @@ namespace ReadersCorner.Core.Tests.Services
         }
 
         [Fact]
-        public void AddBook_NullBookArgument_DoesNotThrow()
+        public void Add_NullBookArgument_DoesNotThrow()
         {
             var mock = _mockedRepository.Create(Method.Add, null, null);
 
@@ -83,7 +83,7 @@ namespace ReadersCorner.Core.Tests.Services
         }
 
         [Fact]
-        public void UpdateBook_SuccessfulUpdate()
+        public void Update_SuccessfulUpdate()
         {
             var updatedBook = TestDataLoader.GetSingle<Book>();
             var mock = _mockedRepository.Create(Method.Update, updatedBook, updatedBook);
@@ -95,7 +95,7 @@ namespace ReadersCorner.Core.Tests.Services
         }
 
         [Fact]
-        public void UpdateBook_NullBookArgument_DoesNotThrow()
+        public void Update_NullBookArgument_DoesNotThrow()
         {
             var mock = _mockedRepository.Create(Method.Update, null, new Book());
 
@@ -104,7 +104,7 @@ namespace ReadersCorner.Core.Tests.Services
         }
 
         [Fact]
-        public void DeleteBook_SuccessfulDeletion()
+        public void Delete_SuccessfulDeletion()
         {
             var bookIdToDelete = 1;
             var mock = _mockedRepository.Create(Method.Delete, bookIdToDelete, true);
@@ -116,7 +116,7 @@ namespace ReadersCorner.Core.Tests.Services
         }
 
         [Fact]
-        public void DeleteBook_InvalidId_ReturnsFalse()
+        public void Delete_InvalidId_ReturnsFalse()
         {
             var invalidBookId = -1;
             var mock = _mockedRepository.Create(Method.Delete, invalidBookId, false);
