@@ -1,3 +1,4 @@
+using Moq;
 using ReadersCorner.Core.Models;
 using ReadersCorner.Core.Tests.Services.Utils;
 using ReadersCorner.Core.Tests.Utils;
@@ -59,6 +60,19 @@ namespace ReadersCorner.Core.Tests.Services
             var result = mock.AuthorService.GetAll();
 
             Assert.Empty(result);
+        }
+
+        [Fact]
+        public void Add_SuccessfulAddition()
+        {
+            var newAuthor = new Author { Name = "Author" };
+            var addedAuthor = new Author { Id = 5, Name = "Author" };
+            var mock = _mockedRepository.Create(Method.Add, newAuthor, addedAuthor);
+
+            var result = mock.AuthorService.Add(newAuthor);
+
+            Assert.Equal(newAuthor, result);
+            mock.Repository.Verify(repo => repo.Add(newAuthor), Times.Once());
         }
     }
 }

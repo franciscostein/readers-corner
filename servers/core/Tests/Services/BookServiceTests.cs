@@ -61,7 +61,7 @@ namespace ReadersCorner.Core.Tests.Services
         }
 
         [Fact]
-        public void AddBook_SuccessfulAddition()
+        public void Add_SuccessfulAddition()
         {
             var newBook = new Book { Title = "New Book" };
             var addedBook = new Book { Id = 5, Title = "New Book" };
@@ -74,7 +74,7 @@ namespace ReadersCorner.Core.Tests.Services
         }
 
         [Fact]
-        public void AddBook_NullBookArgument_DoesNotThrow()
+        public void Add_NullBookArgument_DoesNotThrow()
         {
             var mock = _mockedRepository.Create(Method.Add, null, null);
 
