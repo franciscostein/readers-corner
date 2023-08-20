@@ -95,5 +95,14 @@ namespace ReadersCorner.Core.Tests.Services
             Assert.Equal(updatedAuthor, result);
             mock.Repository.Verify(repo => repo.Update(updatedAuthor), Times.Once);
         }
+
+        [Fact]
+        public void Update_NullAuthorArgument_DoesNotThrow()
+        {
+            var mock = _mockedRepository.Create(Method.Update, null, new Book());
+
+            Assert.Null(Record.Exception(() => mock.AuthorService.Update(null)));
+            mock.Repository.Verify(repo => repo.Update(It.IsAny<Author>()), Times.Never);
+        }
     }
 }
