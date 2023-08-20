@@ -116,5 +116,18 @@ namespace ReadersCorner.Core.Tests.Services
             Assert.True(result);
             mock.Repository.Verify(repo => repo.Delete(authorId), Times.Once);
         }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        public void Delete_InvalidId_ReturnsFalse(int invalidId)
+        {
+            var mock = _mockedRepository.Create(Method.Delete, invalidId, false);
+
+            var result = mock.AuthorService.Delete(invalidId);
+
+            Assert.False(result);
+            mock.Repository.Verify(repo => repo.Delete(invalidId), Times.Once);
+        }
     }
 }
