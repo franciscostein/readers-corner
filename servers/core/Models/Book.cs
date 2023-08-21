@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ReadersCorner.Core.Models
 {
@@ -13,8 +14,9 @@ namespace ReadersCorner.Core.Models
 
         [Required]
         public decimal Price { get; set; }
-        
+
         [Required]
+        [ForeignKey("AuthorId")]
         public Author Author { get; set; }
     }
 }
