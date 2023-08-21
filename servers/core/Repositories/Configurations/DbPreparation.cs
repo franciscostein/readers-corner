@@ -19,7 +19,7 @@ namespace ReadersCorner.Core.Repositories.Configurations
             {
                 AddRange<Author>(context);
             }
-            if (!context.Authors.Any())
+            if (!context.Books.Any())
             {
                 AddRange<Book>(context);
             }
@@ -29,7 +29,7 @@ namespace ReadersCorner.Core.Repositories.Configurations
         {
             Console.WriteLine($"--> Seeding data for {typeof(T).Name}...");
 
-            var list = TestDataLoader.GetList<T>();
+            var list = TestDataLoader.GetList<T>(true);
 
             if (typeof(T) == typeof(Author))
                 context.Authors.AddRange(list as List<Author>);
