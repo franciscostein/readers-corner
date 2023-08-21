@@ -1,10 +1,13 @@
+using Microsoft.EntityFrameworkCore;
 using ReadersCorner.Core.Repositories;
+using ReadersCorner.Core.Repositories.Configurations;
 using ReadersCorner.Core.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("ReadersCornerInMemory"));
 builder.Services.AddControllers();
 builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
@@ -19,6 +22,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    DbPreparation.Populate(app);
 }
 
 app.UseHttpsRedirection();
