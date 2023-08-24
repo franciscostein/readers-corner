@@ -1,28 +1,37 @@
 using ReadersCorner.Core.Models;
+using ReadersCorner.Core.Repositories.Configurations;
 using ReadersCorner.Core.Repositories.Interfaces;
 
 namespace ReadersCorner.Core.Repositories
 {
     public class BookRepository : IBookRepository
     {
-        public Book Add(Book book)
+        private readonly AppDbContext _context;
+
+        public BookRepository(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public bool Delete(int id)
+        public Book Add(Book book)
         {
-            throw new NotImplementedException();
+            var result = _context.Books.Add(book);
+            return result.Entity;
+        }
+
+        public bool Delete(Book book)
+        {
+            return _context.Books.Remove(book).IsKeySet;
         }
 
         public List<Book> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.Books.ToList();
         }
 
         public Book GetById(int id)
         {
-            throw new NotImplementedException();
+            return _context.Books.FirstOrDefault(book => book.Id == id);
         }
 
         public Book Update(Book entity)
