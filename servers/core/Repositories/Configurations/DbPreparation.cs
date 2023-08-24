@@ -23,6 +23,7 @@ namespace ReadersCorner.Core.Repositories.Configurations
             {
                 AddRange<Book>(context);
             }
+            context.SaveChanges();
         }
 
         private static void AddRange<T>(AppDbContext context)
@@ -32,11 +33,13 @@ namespace ReadersCorner.Core.Repositories.Configurations
             var list = TestDataLoader.GetList<T>(true);
 
             if (typeof(T) == typeof(Author))
+            {
                 context.Authors.AddRange(list as List<Author>);
+            }
             else if (typeof(T) == typeof(Book))
+            {
                 context.Books.AddRange(list as List<Book>);
-
-            context.SaveChanges();
+            }
         }
     }
 }
