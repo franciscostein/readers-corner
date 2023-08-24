@@ -15,13 +15,13 @@ namespace ReadersCorner.Core.Repositories.Configurations
 
         private static void SeedData(AppDbContext context)
         {
-            if (!context.Authors.Any())
-            {
-                AddRange<Author>(context);
-            }
             if (!context.Books.Any())
             {
                 AddRange<Book>(context);
+            }
+            if (!context.Authors.Any())
+            {
+                AddRange<Author>(context);
             }
             context.SaveChanges();
         }
@@ -34,11 +34,25 @@ namespace ReadersCorner.Core.Repositories.Configurations
 
             if (typeof(T) == typeof(Author))
             {
-                context.Authors.AddRange(list as List<Author>);
+                foreach (var author in list as List<Author>)
+                {
+                    if (context.Authors.Find(author.Id) == null)
+                        context.Authors.Add(author);
+                }
             }
             else if (typeof(T) == typeof(Book))
             {
-                context.Books.AddRange(list as List<Book>);
+                foreach (var book in list as List<Book>)
+                {
+                    if (context.Books.Find(book.Id) == null)
+                    {
+                        var existingAuthor = context.Authors.Local.FirstOrDefault(author => author.Id == book.Author.Id);
+                        if (existingAuthor != null)
+                            book.Author = null;
+
+                        context.Books.Add(book);
+                    }
+                }
             }
         }
     }
