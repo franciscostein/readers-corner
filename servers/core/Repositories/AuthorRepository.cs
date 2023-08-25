@@ -24,6 +24,11 @@ namespace ReadersCorner.Core.Repositories
             return _context.Authors.Remove(author).IsKeySet;
         }
 
+        public bool Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Author> GetAll()
         {
             return _context.Authors.ToList();
@@ -38,5 +43,7 @@ namespace ReadersCorner.Core.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public bool SaveChanges() => _context.SaveChanges() >= 0;
     }
 }

@@ -4,5 +4,6 @@ namespace ReadersCorner.Core.Repositories.Interfaces
 {
     public interface IAuthorRepository : IRepository<Author>
     {
+        bool Delete(Author author);
     }
 }
