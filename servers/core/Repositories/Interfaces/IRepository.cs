@@ -7,5 +7,6 @@ namespace ReadersCorner.Core.Repositories.Interfaces
         TModel Add(TModel model);
         TModel Update(TModel model);
         bool Delete(int id);
+        bool SaveChanges();
     }
 }

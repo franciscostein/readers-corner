@@ -24,6 +24,11 @@ namespace ReadersCorner.Core.Repositories
             return _context.Books.Remove(book).IsKeySet;
         }
 
+        public bool Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Book> GetAll()
         {
             return _context.Books.ToList();
@@ -34,9 +39,12 @@ namespace ReadersCorner.Core.Repositories
             return _context.Books.FirstOrDefault(book => book.Id == id);
         }
 
-        public Book Update(Book entity)
+        public Book Update(Book book)
         {
-            throw new NotImplementedException();
+            var updatedBook = _context.Books.Update(book);
+            return updatedBook.Entity;
         }
+
+        public bool SaveChanges() => _context.SaveChanges() >= 0;
     }
 }
