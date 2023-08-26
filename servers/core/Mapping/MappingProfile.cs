@@ -9,6 +9,7 @@ namespace ReadersCorner.Core.Mapping
         public MappingProfile()
         {
             CreateMap<Book, BookReadDTO>();
+            CreateMap<Author, AuthorReadDTO>();
         }
     }
 }
