@@ -22,8 +22,6 @@ namespace ReadersCorner.Core.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<BookReadDTO>> GetBooks()
         {
-            Console.WriteLine("--> Getting Books...");
-
             var books = _service.GetAll();
 
             return Ok(_mapper.Map<IEnumerable<BookReadDTO>>(books));
@@ -40,14 +38,14 @@ namespace ReadersCorner.Core.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<BookReadDTO>> CreateBook(BookCreateDTO bookCreateDTO)
+        public async Task<ActionResult<BookReadDTO>> CreateBookAsync(BookCreateDTO bookCreateDTO)
         {
             var bookModel = _mapper.Map<Book>(bookCreateDTO);
             var book = _service.Add(bookModel);
 
             var bookReadDTO = _mapper.Map<BookReadDTO>(book);
 
-            return CreatedAtRoute(nameof(CreateBook), new { bookReadDTO.Id }, bookReadDTO);
+            return CreatedAtRoute(nameof(GetBookById), new { bookReadDTO.Id }, bookReadDTO);
         }
     }
 }
