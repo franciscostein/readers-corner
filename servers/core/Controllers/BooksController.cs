@@ -22,8 +22,6 @@ namespace ReadersCorner.Core.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<BookReadDTO>> GetBooks()
         {
-            Console.WriteLine("--> Getting Books...");
-
             var books = _service.GetAll();
 
             return Ok(_mapper.Map<IEnumerable<BookReadDTO>>(books));
