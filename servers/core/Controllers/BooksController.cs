@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ReadersCorner.Core.DTOs;
+using ReadersCorner.Core.Models;
 using ReadersCorner.Core.Services.Interfaces;
 
 namespace ReadersCorner.Core.Controllers
@@ -36,6 +37,17 @@ namespace ReadersCorner.Core.Controllers
                 return Ok(_mapper.Map<BookReadDTO>(book));
 
             return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<BookReadDTO>> CreateBook(BookCreateDTO bookCreateDTO)
+        {
+            var bookModel = _mapper.Map<Book>(bookCreateDTO);
+            var book = _service.Add(bookModel);
+
+            var bookReadDTO = _mapper.Map<BookReadDTO>(book);
+
+            return CreatedAtRoute(nameof(CreateBook), new { bookReadDTO.Id }, bookReadDTO);
         }
     }
 }
