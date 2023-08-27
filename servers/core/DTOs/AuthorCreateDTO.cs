@@ -6,6 +6,6 @@ namespace ReadersCorner.Core.DTOs
     {
         public string Name { get; set; }
 
-        public ICollection<Book> Books { get; set; } = new List<Book>();
+        public ICollection<BookCreateDTO> Books { get; set; } = new List<BookCreateDTO>();
     }
 }

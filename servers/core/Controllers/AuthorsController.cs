@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ReadersCorner.Core.DTOs;
 using ReadersCorner.Core.Models;
@@ -8,6 +9,7 @@ namespace ReadersCorner.Core.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AuthorsController : ControllerBase
     {
         private readonly IAuthorService _service;
