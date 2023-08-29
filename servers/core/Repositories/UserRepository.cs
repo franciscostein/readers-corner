@@ -5,7 +5,7 @@ namespace ReadersCorner.Core.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        public User GetUserByUsername(string username)
+        public Task<User> GetUserByUsernameAsync(string username)
         {
             throw new NotImplementedException();
         }

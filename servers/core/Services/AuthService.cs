@@ -13,14 +13,21 @@ namespace ReadersCorner.Core.Services
             _repository = repository;
         }
 
-        public Task<User> AuthenticateAsync(string login, string password)
+        public async Task<User> AuthenticateAsync(string login, string password)
         {
-            throw new NotImplementedException();
+            var user = await _repository.GetUserByUsernameAsync(login);
+
+            if (user == null || !ValidatePassword(user, password))
+                return null;
+
+            return user;
         }
 
         public object GenerateJwtToken(User user)
         {
             throw new NotImplementedException();
         }
+
+        private bool ValidatePassword(User user, string password) => string.Equals(user.Password, password);
     }
 }

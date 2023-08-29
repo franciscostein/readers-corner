@@ -4,6 +4,6 @@ namespace ReadersCorner.Core.Repositories.Interfaces
 {
     public interface IUserRepository
     {
-        User GetUserByUsername(string username);
+        Task<User> GetUserByUsernameAsync(string username);
     }
 }

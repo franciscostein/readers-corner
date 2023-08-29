@@ -24,7 +24,7 @@ namespace ReadersCorner.Core.Tests.Services
             var user = new User { Id = 1, UserName = username, Password = password };
 
             var mockRepository = new Mock<IUserRepository>();
-            mockRepository.Setup(repo => repo.GetUserByUsername(username)).Returns(user);
+            mockRepository.Setup(repo => repo.GetUserByUsernameAsync(username)).ReturnsAsync(user);
             var service = new AuthService(mockRepository.Object);
 
             var result = await service.AuthenticateAsync(username, password);
