@@ -1,8 +1,10 @@
+using ReadersCorner.Core.Models;
+
 namespace ReadersCorner.Core.Services.Interfaces
 {
     public interface IAuthService
     {
-        Task<bool> AuthenticateAsync(string login, string password);
-        object GenerateJwtToken(bool user);
+        Task<User> AuthenticateAsync(string login, string password);
+        object GenerateJwtToken(User user);
     }
 }

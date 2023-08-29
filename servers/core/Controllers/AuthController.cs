@@ -18,7 +18,7 @@ namespace ReadersCorner.Core.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginDTO loginDTO)
         {
-            var user = await _service.AuthenticateAsync(loginDTO.Login, loginDTO.Password);
+            var user = await _service.AuthenticateAsync(loginDTO.Username, loginDTO.Password);
             if (user == null)
                 return Unauthorized();
 
