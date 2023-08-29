@@ -2,22 +2,14 @@ using Moq;
 using ReadersCorner.Core.Models;
 using ReadersCorner.Core.Repositories.Interfaces;
 using ReadersCorner.Core.Services;
-using ReadersCorner.Core.Tests.Utils;
 using Xunit;
 
 namespace ReadersCorner.Core.Tests.Services
 {
     public class AuthServiceTests
     {
-        private readonly MockedRepositoryFactory<User> _mockedRepository;
-
-        public AuthServiceTests()
-        {
-            _mockedRepository = new MockedRepositoryFactory<User>();
-        }
-
         [Fact]
-        public async Task AutheticateAsync_ValidCredentials_ReturnUser()
+        public async Task AutheticateAsync_ValidCredentials_ReturnsUser()
         {
             var username = "user@email.com";
             var password = "p@s5w0rD";
@@ -30,6 +22,21 @@ namespace ReadersCorner.Core.Tests.Services
             var result = await service.AuthenticateAsync(username, password);
 
             Assert.Equal(user, result);
+        }
+
+        [Fact]
+        public async void AutheticateAsync_InvalidCredentials_ReturnsNull()
+        {
+            var username = "user@email.com";
+            var password = "wrongPassword";
+
+            var mockRepository = new Mock<IUserRepository>();
+            mockRepository.Setup(repo => repo.GetUserByUsernameAsync(username)).ReturnsAsync((User)null);
+            var service = new AuthService(mockRepository.Object);
+
+            var result = await service.AuthenticateAsync(username, password);
+
+            Assert.Null(result);
         }
     }
 }
