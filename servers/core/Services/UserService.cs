@@ -1,10 +1,18 @@
 using ReadersCorner.Core.Models;
+using ReadersCorner.Core.Repositories.Interfaces;
 using ReadersCorner.Core.Services.Interfaces;
 
 namespace ReadersCorner.Core.Services
 {
     public class UserService : IUserService
     {
+        private readonly IUserRepository _repository;
+
+        public UserService(IUserRepository repository)
+        {
+            _repository = repository;
+        }
+
         public User Add(User model)
         {
             throw new NotImplementedException();
