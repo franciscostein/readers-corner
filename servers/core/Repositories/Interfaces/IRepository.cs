@@ -6,7 +6,6 @@ namespace ReadersCorner.Core.Repositories.Interfaces
         TModel GetById(int id);
         List<TModel> GetAll();
         TModel Update(TModel model);
-        void Delete(TModel model);
-        bool SaveChanges();
+        bool Delete(TModel model);
     }
 }

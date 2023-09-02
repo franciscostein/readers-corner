@@ -16,6 +16,7 @@ namespace ReadersCorner.Core.Repositories
         public Author Add(Author author)
         {
             var result = _context.Authors.Add(author);
+            _ = SaveChanges();
             return result.Entity;
         }
 
@@ -32,14 +33,23 @@ namespace ReadersCorner.Core.Repositories
         public Author Update(Author author)
         {
             var result = _context.Update(author);
+            _ = SaveChanges();
             return result.Entity;
         }
 
-        public void Delete(Author author)
+        public bool Delete(Author author)
         {
-            _context.Authors.Remove(author);
+            try
+            {
+                _context.Authors.Remove(author);
+                return SaveChanges();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
-        public bool SaveChanges() => _context.SaveChanges() >= 0;
+        private bool SaveChanges() => _context.SaveChanges() >= 0;
     }
 }

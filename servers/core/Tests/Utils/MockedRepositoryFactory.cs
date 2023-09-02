@@ -43,7 +43,7 @@ namespace ReadersCorner.Core.Tests.Utils
                     _mockRepository.Setup(repo => repo.Update((TModel)input)).Returns((TModel)expectedReturn);
                     break;
                 case Method.Delete:
-                    _mockRepository.Setup(repo => repo.Delete((int)input)).Returns((bool)expectedReturn);
+                    _mockRepository.Setup(repo => repo.Delete((TModel)input)).Returns((bool)expectedReturn);
                     break;
             }
 
@@ -64,9 +64,7 @@ namespace ReadersCorner.Core.Tests.Utils
 
     public class MockedRepository<TModel>
     {
-        public MockedRepository()
-        {
-        }
+        public MockedRepository() { }
 
         public MockedRepository(Mock<IRepository<TModel>> repository, IBookService service)
         {
