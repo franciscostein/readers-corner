@@ -19,14 +19,9 @@ namespace ReadersCorner.Core.Repositories
             return result.Entity;
         }
 
-        public bool Delete(Book book)
+        public void Delete(Book book)
         {
-            return _context.Books.Remove(book).IsKeySet;
-        }
-
-        public bool Delete(int id)
-        {
-            throw new NotImplementedException();
+            _context.Books.Remove(book);
         }
 
         public List<Book> GetAll()
