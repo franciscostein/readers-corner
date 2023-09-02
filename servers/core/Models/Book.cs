@@ -1,9 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ReadersCorner.Core.Models.Interfaces;
 
 namespace ReadersCorner.Core.Models
 {
-    public class Book
+    public class Book : IModel
     {
         [Key]
         [Required]

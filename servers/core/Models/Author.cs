@@ -1,8 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using ReadersCorner.Core.Models.Interfaces;
 
 namespace ReadersCorner.Core.Models
 {
-    public class Author
+    public class Author : IModel
     {
         [Key]
         [Required]
