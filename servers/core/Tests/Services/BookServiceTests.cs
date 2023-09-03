@@ -109,7 +109,7 @@ namespace ReadersCorner.Core.Tests.Services
         public void Delete_SuccessfulDeletion(int bookId)
         {
             var bookToDelete = TestDataLoader.GetById<Book>(bookId);
-            var mock = _mockedRepository.Create(Method.Delete, bookToDelete, true);
+            var mock = _mockedRepository.Create(bookId, bookToDelete, bookToDelete, true);
 
             var result = mock.BookService.Delete(bookId);
 
@@ -122,12 +122,12 @@ namespace ReadersCorner.Core.Tests.Services
         [InlineData(-1)]
         public void Delete_InvalidId_ReturnsFalse(int invalidBookId)
         {
-            var mock = _mockedRepository.Create(Method.Delete, null, false);
+            var mock = _mockedRepository.Create(invalidBookId, null, null, false);
 
             var result = mock.BookService.Delete(invalidBookId);
 
             Assert.False(result);
-            mock.Repository.Verify(repo => repo.Delete(null), Times.Once);
+            mock.Repository.Verify(repo => repo.Delete(null), Times.Never);
         }
     }
 }

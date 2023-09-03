@@ -42,11 +42,21 @@ namespace ReadersCorner.Core.Tests.Utils
                 case Method.Update:
                     _mockRepository.Setup(repo => repo.Update((TModel)input)).Returns((TModel)expectedReturn);
                     break;
-                case Method.Delete:
-                    _mockRepository.Setup(repo => repo.Delete((TModel)input)).Returns((bool)expectedReturn);
-                    break;
             }
 
+            return GetMockedRepository();
+        }
+
+        public MockedRepository<TModel> Create(object getInput, object getReturn, object deleteInput, object deleteReturn)
+        {
+            _mockRepository.Setup(repo => repo.GetById((int)getInput)).Returns((TModel)getReturn);
+            _mockRepository.Setup(repo => repo.Delete((TModel)deleteInput)).Returns((bool)deleteReturn);
+
+            return GetMockedRepository();
+        }
+
+        private MockedRepository<TModel> GetMockedRepository()
+        {
             if (typeof(TModel) == typeof(Book))
             {
                 var service = new BookService((IBookRepository)_mockRepository.Object);

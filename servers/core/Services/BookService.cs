@@ -25,7 +25,7 @@ namespace ReadersCorner.Core.Services
         {
             var bookToDelete = _bookRepository.GetById(bookId);
             if (bookToDelete == null)
-                throw new ArgumentException("Invalid ID");
+                return false;
 
             return _bookRepository.Delete(bookToDelete);
         }
