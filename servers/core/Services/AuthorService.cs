@@ -25,7 +25,7 @@ namespace ReadersCorner.Core.Services
         {
             var authorToDelete = _repository.GetById(authorId);
             if (authorToDelete == null)
-                throw new ArgumentException("Invalid ID");
+                return false;
 
             return _repository.Delete(authorToDelete);
         }
