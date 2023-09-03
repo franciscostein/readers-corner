@@ -23,7 +23,11 @@ namespace ReadersCorner.Core.Services
 
         public bool Delete(int authorId)
         {
-            return _repository.Delete(authorId);
+            var authorToDelete = _repository.GetById(authorId);
+            if (authorToDelete == null)
+                throw new ArgumentException("Invalid ID");
+
+            return _repository.Delete(authorToDelete);
         }
 
         public List<Author> GetAll()

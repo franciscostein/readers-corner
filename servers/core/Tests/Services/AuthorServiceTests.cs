@@ -109,12 +109,13 @@ namespace ReadersCorner.Core.Tests.Services
         [InlineData(1)]
         public void Delete_SuccessfulDeletion(int authorId)
         {
+            var authorToDelete = TestDataLoader.GetById<Author>(authorId);
             var mock = _mockedRepository.Create(Method.Delete, authorId, true);
 
             var result = mock.AuthorService.Delete(authorId);
 
             Assert.True(result);
-            mock.Repository.Verify(repo => repo.Delete(authorId), Times.Once);
+            mock.Repository.Verify(repo => repo.Delete(authorToDelete), Times.Once);
         }
 
         [Theory]
@@ -127,7 +128,7 @@ namespace ReadersCorner.Core.Tests.Services
             var result = mock.AuthorService.Delete(invalidId);
 
             Assert.False(result);
-            mock.Repository.Verify(repo => repo.Delete(invalidId), Times.Once);
+            mock.Repository.Verify(repo => repo.Delete(null), Times.Once);
         }
     }
 }
