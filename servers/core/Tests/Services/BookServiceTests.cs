@@ -85,21 +85,27 @@ namespace ReadersCorner.Core.Tests.Services
         [Fact]
         public void Update_SuccessfulUpdate()
         {
+            var bookId = 1;
             var updatedBook = TestDataLoader.GetSingle<Book>();
             var mock = _mockedRepository.Create(Method.Update, updatedBook, updatedBook);
 
-            var result = mock.BookService.Update(updatedBook);
+            var result = mock.BookService.Update(bookId, updatedBook);
 
             Assert.Equal(updatedBook, result);
             mock.Repository.Verify(repo => repo.Update(updatedBook), Times.Once);
         }
 
-        [Fact]
-        public void Update_NullBookArgument_DoesNotThrow()
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(0)]
+        public void Update_InvalidId_ReturnsNull(int invalidId)
         {
+            var bookToUpdate = TestDataLoader.GetSingle<Book>();
             var mock = _mockedRepository.Create(Method.Update, null, new Book());
 
-            Assert.Null(Record.Exception(() => mock.BookService.Update(null)));
+            var result = mock.BookService.Update(invalidId, bookToUpdate);
+
+            Assert.Null(result);
             mock.Repository.Verify(repo => repo.Update(It.IsAny<Book>()), Times.Never);
         }
 

@@ -87,21 +87,28 @@ namespace ReadersCorner.Core.Tests.Services
         [Fact]
         public void Update_SuccessfulUpdate()
         {
-            var updatedAuthor = TestDataLoader.GetSingle<Author>();
-            var mock = _mockedRepository.Create(Method.Update, updatedAuthor, updatedAuthor);
+            var authorId = 99;
+            var authorToUpdate = TestDataLoader.GetSingle<Author>();
+            authorToUpdate.Name = "Test Author";
+            var mock = _mockedRepository.Create(Method.Update, authorToUpdate, authorToUpdate);
 
-            var result = mock.AuthorService.Update(updatedAuthor);
+            var result = mock.AuthorService.Update(authorId, authorToUpdate);
 
-            Assert.Equal(updatedAuthor, result);
-            mock.Repository.Verify(repo => repo.Update(updatedAuthor), Times.Once);
+            Assert.Equal(authorToUpdate, result);
+            mock.Repository.Verify(repo => repo.Update(authorToUpdate), Times.Once);
         }
 
-        [Fact]
-        public void Update_NullAuthorArgument_DoesNotThrow()
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(0)]
+        public void Update_AuthorNotFound_ReturnsNull(int invalidId)
         {
+            var authorToUpdate = TestDataLoader.GetSingle<Author>();
             var mock = _mockedRepository.Create(Method.Update, null, new Author());
 
-            Assert.Null(Record.Exception(() => mock.AuthorService.Update(null)));
+            var result = mock.AuthorService.Update(invalidId, authorToUpdate);
+
+            Assert.Null(result);
             mock.Repository.Verify(repo => repo.Update(It.IsAny<Author>()), Times.Never);
         }
 
