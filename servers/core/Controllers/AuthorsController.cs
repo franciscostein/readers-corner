@@ -40,14 +40,38 @@ namespace ReadersCorner.Core.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<AuthorReadDTO>> CreateAuthorAsync(AuthorCreateDTO authorCreateDTO)
+        public async Task<ActionResult<AuthorReadDTO>> CreateAuthorAsync(AuthorCreateDTO authorDTO)
         {
-            var authorModel = _mapper.Map<Author>(authorCreateDTO);
+            var authorModel = _mapper.Map<Author>(authorDTO);
             var author = _service.Add(authorModel);
 
             var authorReadDTO = _mapper.Map<AuthorReadDTO>(author);
 
             return CreatedAtRoute(nameof(GetAuthorById), new { authorReadDTO.Id }, authorReadDTO);
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult UpdateAuthor(int id, [FromBody] AuthorUpdateDTO authorDTO)
+        {
+            var authorModel = _mapper.Map<Author>(authorDTO);
+            var updatedAuthor = _service.Update(id, authorModel);
+
+            if (updatedAuthor == null)
+                return NotFound();
+
+            var author = _mapper.Map<AuthorReadDTO>(updatedAuthor);
+
+            return Ok(author);
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult DeleteAuthor(int authorId)
+        {
+            var deletedSuccefully = _service.Delete(authorId);
+            if (!deletedSuccefully)
+                return NotFound();
+
+            return Ok();
         }
     }
 }

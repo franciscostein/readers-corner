@@ -40,7 +40,7 @@ namespace ReadersCorner.Core.Services
             return _bookRepository.GetById(bookId);
         }
 
-        public Book Update(Book book)
+        public Book Update(int bookId, Book book)
         {
             if (book == null)
                 return new Book();

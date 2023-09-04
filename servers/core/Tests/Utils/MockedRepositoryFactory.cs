@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore.Update.Internal;
 using Moq;
 using ReadersCorner.Core.Models;
 using ReadersCorner.Core.Repositories.Interfaces;
@@ -39,18 +40,24 @@ namespace ReadersCorner.Core.Tests.Utils
                 case Method.Add:
                     _mockRepository.Setup(repo => repo.Add((TModel)input)).Returns((TModel)expectedReturn);
                     break;
-                case Method.Update:
-                    _mockRepository.Setup(repo => repo.Update((TModel)input)).Returns((TModel)expectedReturn);
-                    break;
             }
 
             return GetMockedRepository();
         }
 
-        public MockedRepository<TModel> Create(object getInput, object getReturn, object deleteInput, object deleteReturn)
+        public MockedRepository<TModel> Create(Method method, object getInput, object getReturn, object operationInput, object expectedReturn)
         {
             _mockRepository.Setup(repo => repo.GetById((int)getInput)).Returns((TModel)getReturn);
-            _mockRepository.Setup(repo => repo.Delete((TModel)deleteInput)).Returns((bool)deleteReturn);
+
+            switch (method)
+            {
+                case Method.Update:
+                    _mockRepository.Setup(repo => repo.Update((TModel)operationInput)).Returns((TModel)expectedReturn);
+                    break;
+                case Method.Delete:
+                    _mockRepository.Setup(repo => repo.Delete((TModel)operationInput)).Returns((bool)expectedReturn);
+                    break;
+            }
 
             return GetMockedRepository();
         }
