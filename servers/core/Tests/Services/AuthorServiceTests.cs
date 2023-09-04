@@ -90,7 +90,7 @@ namespace ReadersCorner.Core.Tests.Services
             var authorId = 99;
             var authorToUpdate = TestDataLoader.GetSingle<Author>();
             authorToUpdate.Name = "Test Author";
-            var mock = _mockedRepository.Create(Method.Update, authorToUpdate, authorToUpdate);
+            var mock = _mockedRepository.Create(Method.Update, authorId, authorToUpdate, authorToUpdate, authorToUpdate);
 
             var result = mock.AuthorService.Update(authorId, authorToUpdate);
 
@@ -104,7 +104,7 @@ namespace ReadersCorner.Core.Tests.Services
         public void Update_AuthorNotFound_ReturnsNull(int invalidId)
         {
             var authorToUpdate = TestDataLoader.GetSingle<Author>();
-            var mock = _mockedRepository.Create(Method.Update, null, new Author());
+            var mock = _mockedRepository.Create(Method.Update, invalidId, null, null, null);
 
             var result = mock.AuthorService.Update(invalidId, authorToUpdate);
 
@@ -118,7 +118,7 @@ namespace ReadersCorner.Core.Tests.Services
         public void Delete_SuccessfulDeletion(int authorId)
         {
             var authorToDelete = TestDataLoader.GetById<Author>(authorId);
-            var mock = _mockedRepository.Create(authorId, authorToDelete, authorToDelete, true);
+            var mock = _mockedRepository.Create(Method.Delete, authorId, authorToDelete, authorToDelete, true);
 
             var result = mock.AuthorService.Delete(authorId);
 
@@ -131,7 +131,7 @@ namespace ReadersCorner.Core.Tests.Services
         [InlineData(-1)]
         public void Delete_InvalidId_ReturnsFalse(int invalidId)
         {
-            var mock = _mockedRepository.Create(invalidId, null, null, false);
+            var mock = _mockedRepository.Create(Method.Delete, invalidId, null, null, false);
 
             var result = mock.AuthorService.Delete(invalidId);
 
