@@ -63,5 +63,15 @@ namespace ReadersCorner.Core.Controllers
 
             return Ok(author);
         }
+
+        [HttpDelete("{id}")]
+        public ActionResult DeleteAuthor(int authorId)
+        {
+            var deletedSuccefully = _service.Delete(authorId);
+            if (!deletedSuccefully)
+                return NotFound();
+
+            return Ok();
+        }
     }
 }
