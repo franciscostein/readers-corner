@@ -1,3 +1,4 @@
+using System.Reflection.Metadata.Ecma335;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -48,6 +49,20 @@ namespace ReadersCorner.Core.Controllers
             var bookReadDTO = _mapper.Map<BookReadDTO>(book);
 
             return CreatedAtRoute(nameof(GetBookById), new { bookReadDTO.Id }, bookReadDTO);
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult UpdateBook(int id, [FromBody] BookUpdateDTO bookDTO)
+        {
+            var bookModel = _mapper.Map<Book>(bookDTO);
+            var updatedBook = _service.Update(id, bookModel);
+
+            if (updatedBook == null)
+                return NotFound();
+
+            var book = _mapper.Map<BookReadDTO>(updatedBook);
+
+            return Ok(book);
         }
     }
 }
