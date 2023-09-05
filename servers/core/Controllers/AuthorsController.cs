@@ -65,9 +65,9 @@ namespace ReadersCorner.Core.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteAuthor(int authorId)
+        public ActionResult DeleteAuthor(int id)
         {
-            var deletedSuccefully = _service.Delete(authorId);
+            var deletedSuccefully = _service.Delete(id);
             if (!deletedSuccefully)
                 return NotFound();
 

@@ -1,8 +1,6 @@
-using ReadersCorner.Core.Models;
-
 namespace ReadersCorner.Core.DTOs
 {
-    public class BookCreateDTO
+    public class BookUpdateDTO
     {
         public string Title { get; set; }
 
