@@ -82,17 +82,18 @@ namespace ReadersCorner.Core.Tests.Services
             mock.Repository.Verify(repo => repo.Add(It.IsAny<Book>()), Times.Never);
         }
 
-        [Fact]
-        public void Update_SuccessfulUpdate()
+        [Theory]
+        [InlineData(1)]
+        [InlineData(3)]
+        public void Update_SuccessfulUpdate(int bookId)
         {
-            var bookId = 1;
-            var updatedBook = TestDataLoader.GetSingle<Book>();
-            var mock = _mockedRepository.Create(Method.Update, updatedBook, updatedBook);
+            var bookToUpdate = TestDataLoader.GetById<Book>(bookId);
+            var mock = _mockedRepository.Create(Method.Update, bookId, bookToUpdate, bookToUpdate, bookToUpdate);
 
-            var result = mock.BookService.Update(bookId, updatedBook);
+            var result = mock.BookService.Update(bookId, bookToUpdate);
 
-            Assert.Equal(updatedBook, result);
-            mock.Repository.Verify(repo => repo.Update(updatedBook), Times.Once);
+            Assert.Equal(bookToUpdate, result);
+            mock.Repository.Verify(repo => repo.Update(bookToUpdate), Times.Once);
         }
 
         [Theory]
@@ -101,7 +102,7 @@ namespace ReadersCorner.Core.Tests.Services
         public void Update_InvalidId_ReturnsNull(int invalidId)
         {
             var bookToUpdate = TestDataLoader.GetSingle<Book>();
-            var mock = _mockedRepository.Create(Method.Update, null, new Book());
+            var mock = _mockedRepository.Create(Method.Update, invalidId, null, null, null);
 
             var result = mock.BookService.Update(invalidId, bookToUpdate);
 
