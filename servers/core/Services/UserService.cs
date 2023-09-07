@@ -21,9 +21,13 @@ namespace ReadersCorner.Core.Services
             return _repository.Add(user);
         }
 
-        public bool Delete(int id)
+        public bool Delete(int userId)
         {
-            throw new NotImplementedException();
+            var userToDelete = _repository.GetById(userId);
+            if (userToDelete == null)
+                return false;
+
+            return _repository.Delete(userToDelete);
         }
 
         public List<User> GetAll()
@@ -40,7 +44,7 @@ namespace ReadersCorner.Core.Services
         {
             var existingUser = _repository.GetById(userId);
             if (existingUser == null)
-            return null;
+                return null;
 
             user.Id = existingUser.Id;
 
