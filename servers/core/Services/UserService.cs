@@ -33,7 +33,7 @@ namespace ReadersCorner.Core.Services
             throw new NotImplementedException();
         }
 
-        public User Update(User model)
+        public User Update(int userId, User model)
         {
             throw new NotImplementedException();
         }

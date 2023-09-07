@@ -16,17 +16,13 @@ namespace ReadersCorner.Core.Repositories
         public Author Add(Author author)
         {
             var result = _context.Authors.Add(author);
+            _ = SaveChanges();
             return result.Entity;
         }
 
-        public bool Delete(Author author)
+        public Author GetById(int authorId)
         {
-            return _context.Authors.Remove(author).IsKeySet;
-        }
-
-        public bool Delete(int id)
-        {
-            throw new NotImplementedException();
+            return _context.Authors.FirstOrDefault(author => author.Id == authorId);
         }
 
         public List<Author> GetAll()
@@ -34,16 +30,26 @@ namespace ReadersCorner.Core.Repositories
             return _context.Authors.ToList();
         }
 
-        public Author GetById(int id)
+        public Author Update(Author author)
         {
-            return _context.Authors.FirstOrDefault(author => author.Id == id);
+            var result = _context.Update(author);
+            _ = SaveChanges();
+            return result.Entity;
         }
 
-        public Author Update(Author entity)
+        public bool Delete(Author author)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.Authors.Remove(author);
+                return SaveChanges();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
-        public bool SaveChanges() => _context.SaveChanges() >= 0;
+        private bool SaveChanges() => _context.SaveChanges() >= 0;
     }
 }

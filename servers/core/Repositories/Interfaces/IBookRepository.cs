@@ -4,6 +4,5 @@ namespace ReadersCorner.Core.Repositories.Interfaces
 {
     public interface IBookRepository : IRepository<Book>
     {
-        bool Delete(Book book);
     }
 }

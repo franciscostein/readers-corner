@@ -87,34 +87,43 @@ namespace ReadersCorner.Core.Tests.Services
         [Fact]
         public void Update_SuccessfulUpdate()
         {
-            var updatedAuthor = TestDataLoader.GetSingle<Author>();
-            var mock = _mockedRepository.Create(Method.Update, updatedAuthor, updatedAuthor);
+            var authorId = 99;
+            var authorToUpdate = TestDataLoader.GetSingle<Author>();
+            authorToUpdate.Name = "Test Author";
+            var mock = _mockedRepository.Create(Method.Update, authorId, authorToUpdate, authorToUpdate, authorToUpdate);
 
-            var result = mock.AuthorService.Update(updatedAuthor);
+            var result = mock.AuthorService.Update(authorId, authorToUpdate);
 
-            Assert.Equal(updatedAuthor, result);
-            mock.Repository.Verify(repo => repo.Update(updatedAuthor), Times.Once);
+            Assert.Equal(authorToUpdate, result);
+            mock.Repository.Verify(repo => repo.Update(authorToUpdate), Times.Once);
         }
 
-        [Fact]
-        public void Update_NullAuthorArgument_DoesNotThrow()
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(0)]
+        public void Update_AuthorNotFound_ReturnsNull(int invalidId)
         {
-            var mock = _mockedRepository.Create(Method.Update, null, new Author());
+            var authorToUpdate = TestDataLoader.GetSingle<Author>();
+            var mock = _mockedRepository.Create(Method.Update, invalidId, null, null, null);
 
-            Assert.Null(Record.Exception(() => mock.AuthorService.Update(null)));
+            var result = mock.AuthorService.Update(invalidId, authorToUpdate);
+
+            Assert.Null(result);
             mock.Repository.Verify(repo => repo.Update(It.IsAny<Author>()), Times.Never);
         }
 
         [Theory]
-        [InlineData(1)]
+        [InlineData(99)]
+        [InlineData(103)]
         public void Delete_SuccessfulDeletion(int authorId)
         {
-            var mock = _mockedRepository.Create(Method.Delete, authorId, true);
+            var authorToDelete = TestDataLoader.GetById<Author>(authorId);
+            var mock = _mockedRepository.Create(Method.Delete, authorId, authorToDelete, authorToDelete, true);
 
             var result = mock.AuthorService.Delete(authorId);
 
             Assert.True(result);
-            mock.Repository.Verify(repo => repo.Delete(authorId), Times.Once);
+            mock.Repository.Verify(repo => repo.Delete(authorToDelete), Times.Once);
         }
 
         [Theory]
@@ -122,12 +131,12 @@ namespace ReadersCorner.Core.Tests.Services
         [InlineData(-1)]
         public void Delete_InvalidId_ReturnsFalse(int invalidId)
         {
-            var mock = _mockedRepository.Create(Method.Delete, invalidId, false);
+            var mock = _mockedRepository.Create(Method.Delete, invalidId, null, null, false);
 
             var result = mock.AuthorService.Delete(invalidId);
 
             Assert.False(result);
-            mock.Repository.Verify(repo => repo.Delete(invalidId), Times.Once);
+            mock.Repository.Verify(repo => repo.Delete(null), Times.Never);
         }
     }
 }

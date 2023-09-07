@@ -24,6 +24,11 @@ namespace ReadersCorner.Core.Tests.Utils
                 var authorRepositoryMock = new Mock<IAuthorRepository>();
                 _mockRepository = authorRepositoryMock.As<IRepository<TModel>>();
             }
+            else if (typeof(TModel) == typeof(User))
+            {
+                var userRepositoryMock = new Mock<IUserRepository>();
+                _mockRepository = userRepositoryMock.As<IRepository<TModel>>();
+            }
         }
 
         public MockedRepository<TModel> Create(Method method, object input, object expectedReturn)
@@ -39,14 +44,30 @@ namespace ReadersCorner.Core.Tests.Utils
                 case Method.Add:
                     _mockRepository.Setup(repo => repo.Add((TModel)input)).Returns((TModel)expectedReturn);
                     break;
+            }
+
+            return GetMockedRepository();
+        }
+
+        public MockedRepository<TModel> Create(Method method, object getInput, object getReturn, object operationInput, object expectedReturn)
+        {
+            _mockRepository.Setup(repo => repo.GetById((int)getInput)).Returns((TModel)getReturn);
+
+            switch (method)
+            {
                 case Method.Update:
-                    _mockRepository.Setup(repo => repo.Update((TModel)input)).Returns((TModel)expectedReturn);
+                    _mockRepository.Setup(repo => repo.Update((TModel)operationInput)).Returns((TModel)expectedReturn);
                     break;
                 case Method.Delete:
-                    _mockRepository.Setup(repo => repo.Delete((int)input)).Returns((bool)expectedReturn);
+                    _mockRepository.Setup(repo => repo.Delete((TModel)operationInput)).Returns((bool)expectedReturn);
                     break;
             }
 
+            return GetMockedRepository();
+        }
+
+        private MockedRepository<TModel> GetMockedRepository()
+        {
             if (typeof(TModel) == typeof(Book))
             {
                 var service = new BookService((IBookRepository)_mockRepository.Object);
@@ -57,6 +78,11 @@ namespace ReadersCorner.Core.Tests.Utils
                 var service = new AuthorService((IAuthorRepository)_mockRepository.Object);
                 return new MockedRepository<TModel>(_mockRepository, service);
             }
+            else if (typeof(TModel) == typeof(User))
+            {
+                var service = new UserService((IUserRepository)_mockRepository.Object);
+                return new MockedRepository<TModel>(_mockRepository, service);
+            }
 
             return new MockedRepository<TModel>();
         }
@@ -64,9 +90,7 @@ namespace ReadersCorner.Core.Tests.Utils
 
     public class MockedRepository<TModel>
     {
-        public MockedRepository()
-        {
-        }
+        public MockedRepository() { }
 
         public MockedRepository(Mock<IRepository<TModel>> repository, IBookService service)
         {
@@ -80,9 +104,16 @@ namespace ReadersCorner.Core.Tests.Utils
             AuthorService = service;
         }
 
+        public MockedRepository(Mock<IRepository<TModel>> repository, IUserService service)
+        {
+            Repository = repository;
+            UserService = service;
+        }
+
         public Mock<IRepository<TModel>> Repository { get; }
         public IBookService BookService { get; }
         public IAuthorService AuthorService { get; }
+        public IUserService UserService { get; }
     }
 
     public enum Method

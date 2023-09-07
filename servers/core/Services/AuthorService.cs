@@ -23,7 +23,11 @@ namespace ReadersCorner.Core.Services
 
         public bool Delete(int authorId)
         {
-            return _repository.Delete(authorId);
+            var authorToDelete = _repository.GetById(authorId);
+            if (authorToDelete == null)
+                return false;
+
+            return _repository.Delete(authorToDelete);
         }
 
         public List<Author> GetAll()
@@ -36,12 +40,15 @@ namespace ReadersCorner.Core.Services
             return _repository.GetById(authorId);
         }
 
-        public Author Update(Author author)
+        public Author Update(int authorId, Author author)
         {
-            if (author == null)
-                return new Author();
+            var existingAuthor = _repository.GetById(authorId);
+            if (existingAuthor == null)
+                return null;
 
-            return _repository.Update(author);
+            author.Id = existingAuthor.Id;
+
+            return _repository.Update(existingAuthor);
         }
     }
 }

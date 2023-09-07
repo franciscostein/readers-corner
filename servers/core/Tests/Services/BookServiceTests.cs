@@ -82,49 +82,59 @@ namespace ReadersCorner.Core.Tests.Services
             mock.Repository.Verify(repo => repo.Add(It.IsAny<Book>()), Times.Never);
         }
 
-        [Fact]
-        public void Update_SuccessfulUpdate()
+        [Theory]
+        [InlineData(1)]
+        [InlineData(3)]
+        public void Update_SuccessfulUpdate(int bookId)
         {
-            var updatedBook = TestDataLoader.GetSingle<Book>();
-            var mock = _mockedRepository.Create(Method.Update, updatedBook, updatedBook);
+            var bookToUpdate = TestDataLoader.GetById<Book>(bookId);
+            var mock = _mockedRepository.Create(Method.Update, bookId, bookToUpdate, bookToUpdate, bookToUpdate);
 
-            var result = mock.BookService.Update(updatedBook);
+            var result = mock.BookService.Update(bookId, bookToUpdate);
 
-            Assert.Equal(updatedBook, result);
-            mock.Repository.Verify(repo => repo.Update(updatedBook), Times.Once);
+            Assert.Equal(bookToUpdate, result);
+            mock.Repository.Verify(repo => repo.Update(bookToUpdate), Times.Once);
         }
 
-        [Fact]
-        public void Update_NullBookArgument_DoesNotThrow()
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(0)]
+        public void Update_InvalidId_ReturnsNull(int invalidId)
         {
-            var mock = _mockedRepository.Create(Method.Update, null, new Book());
+            var bookToUpdate = TestDataLoader.GetSingle<Book>();
+            var mock = _mockedRepository.Create(Method.Update, invalidId, null, null, null);
 
-            Assert.Null(Record.Exception(() => mock.BookService.Update(null)));
+            var result = mock.BookService.Update(invalidId, bookToUpdate);
+
+            Assert.Null(result);
             mock.Repository.Verify(repo => repo.Update(It.IsAny<Book>()), Times.Never);
         }
 
-        [Fact]
-        public void Delete_SuccessfulDeletion()
+        [Theory]
+        [InlineData(1)]
+        [InlineData(3)]
+        public void Delete_SuccessfulDeletion(int bookId)
         {
-            var bookIdToDelete = 1;
-            var mock = _mockedRepository.Create(Method.Delete, bookIdToDelete, true);
+            var bookToDelete = TestDataLoader.GetById<Book>(bookId);
+            var mock = _mockedRepository.Create(Method.Delete, bookId, bookToDelete, bookToDelete, true);
 
-            var result = mock.BookService.Delete(bookIdToDelete);
+            var result = mock.BookService.Delete(bookId);
 
             Assert.True(result);
-            mock.Repository.Verify(repo => repo.Delete(bookIdToDelete), Times.Once);
+            mock.Repository.Verify(repo => repo.Delete(bookToDelete), Times.Once);
         }
 
-        [Fact]
-        public void Delete_InvalidId_ReturnsFalse()
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        public void Delete_InvalidId_ReturnsFalse(int invalidBookId)
         {
-            var invalidBookId = -1;
-            var mock = _mockedRepository.Create(Method.Delete, invalidBookId, false);
+            var mock = _mockedRepository.Create(Method.Delete, invalidBookId, null, null, false);
 
             var result = mock.BookService.Delete(invalidBookId);
 
             Assert.False(result);
-            mock.Repository.Verify(repo => repo.Delete(invalidBookId), Times.Once);
+            mock.Repository.Verify(repo => repo.Delete(null), Times.Never);
         }
     }
 }

@@ -6,11 +6,11 @@ namespace ReadersCorner.Core.Services
 {
     public class BookService : IBookService
     {
-        private readonly IBookRepository _bookRepository;
+        private readonly IBookRepository _repository;
 
-        public BookService(IBookRepository bookRepository)
+        public BookService(IBookRepository repository)
         {
-            _bookRepository = bookRepository;
+            _repository = repository;
         }
 
         public Book Add(Book book)
@@ -18,30 +18,37 @@ namespace ReadersCorner.Core.Services
             if (book == null)
                 return new Book();
 
-            return _bookRepository.Add(book);
+            return _repository.Add(book);
         }
 
         public bool Delete(int bookId)
         {
-            return _bookRepository.Delete(bookId);
+            var bookToDelete = _repository.GetById(bookId);
+            if (bookToDelete == null)
+                return false;
+
+            return _repository.Delete(bookToDelete);
         }
 
         public List<Book> GetAll()
         {
-            return _bookRepository.GetAll();
+            return _repository.GetAll();
         }
 
         public Book GetById(int bookId)
         {
-            return _bookRepository.GetById(bookId);
+            return _repository.GetById(bookId);
         }
 
-        public Book Update(Book book)
+        public Book Update(int bookId, Book book)
         {
-            if (book == null)
-                return new Book();
+            var existingBook = _repository.GetById(bookId);
+            if (existingBook == null)
+                return null;
 
-            return _bookRepository.Update(book);
+            book.Id = existingBook.Id;
+
+            return _repository.Update(book);
         }
     }
 }
