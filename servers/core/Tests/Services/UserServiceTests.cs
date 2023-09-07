@@ -83,5 +83,19 @@ namespace ReadersCorner.Core.Tests.Services
             Assert.Null(Record.Exception(() => mock.UserService.Add(null)));
             mock.Repository.Verify(repo => repo.Add(It.IsAny<User>()), Times.Never());
         }
+
+        [Theory]
+        [InlineData(1)]
+        public void Update_SuccessfulUpdate(int userId)
+        {
+            var userToUpdate = TestDataLoader.GetById<User>(userId);
+            userToUpdate.Password = "5eY!%wwkYtPWs";
+            var mock = _mockedRepository.Create(Method.Update, userId, userToUpdate, userToUpdate, userToUpdate);
+
+            var result = mock.UserService.Update(userId, userToUpdate);
+
+            Assert.Equal(userToUpdate, result);
+            mock.Repository.Verify(repo => repo.Update(userToUpdate), Times.Once());
+        }
     }
 }
