@@ -28,9 +28,9 @@ namespace ReadersCorner.Core.Services
             throw new NotImplementedException();
         }
 
-        public User GetById(int id)
+        public User GetById(int userId)
         {
-            throw new NotImplementedException();
+            return _repository.GetById(userId);
         }
 
         public User Update(int userId, User model)
