@@ -66,7 +66,7 @@ namespace ReadersCorner.Core.Tests.Services
         public void Add_SuccessfulAddition()
         {
             var newAuthor = new Author { Name = "Author" };
-            var addedAuthor = new Author { Id = 5, Name = "Author" };
+            var addedAuthor = new Author { Id = 5, Name = newAuthor.Name };
             var mock = _mockedRepository.Create(Method.Add, newAuthor, addedAuthor);
 
             var result = mock.AuthorService.Add(newAuthor);

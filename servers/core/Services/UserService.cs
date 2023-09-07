@@ -13,9 +13,12 @@ namespace ReadersCorner.Core.Services
             _repository = repository;
         }
 
-        public User Add(User model)
+        public User Add(User user)
         {
-            throw new NotImplementedException();
+            if (user == null)
+                return null;
+
+            return _repository.Add(user);
         }
 
         public bool Delete(int id)
