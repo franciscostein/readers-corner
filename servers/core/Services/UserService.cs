@@ -25,7 +25,7 @@ namespace ReadersCorner.Core.Services
 
         public List<User> GetAll()
         {
-            throw new NotImplementedException();
+            return _repository.GetAll();
         }
 
         public User GetById(int userId)
