@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Moq;
 using ReadersCorner.Core.Models;
 using ReadersCorner.Core.Tests.Services.Utils;
@@ -96,6 +97,19 @@ namespace ReadersCorner.Core.Tests.Services
 
             Assert.Equal(userToUpdate, result);
             mock.Repository.Verify(repo => repo.Update(userToUpdate), Times.Once());
+        }
+
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(0)]
+        public void Update_UserNotFound_ReturnsNull(int invalidUserId)
+        {
+            var mock = _mockedRepository.Create(Method.Update, invalidUserId, null, null, null);
+
+            var result = mock.UserService.Update(invalidUserId, new User());
+
+            Assert.Null(result);
+            mock.Repository.Verify(repo => repo.Update(It.IsAny<User>()), Times.Never);
         }
     }
 }
