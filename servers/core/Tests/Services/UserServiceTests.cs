@@ -50,5 +50,15 @@ namespace ReadersCorner.Core.Tests.Services
             Assert.Equal(expectedUsers, users);
             Assert.Equal(expectedUsers.Count, users.Count);
         }
+
+        [Fact]
+        public void GetAll_EmptyRepository_ReturnsEmptyList()
+        {
+            var mock = _mockedRepository.Create(Method.GetAll, null, new List<User>());
+
+            var result = mock.UserService.GetAll();
+
+            Assert.Empty(result);
+        }
     }
 }
