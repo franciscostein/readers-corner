@@ -16,11 +16,11 @@ namespace ReadersCorner.Core.Tests.Services
         }
 
         [Theory]
-        [InlineData(1)]
-        [InlineData(3)]
+        [InlineData(99)]
+        [InlineData(103)]
         public void GetById_ValidId_ReturnsCorrectAuthor(int authorId)
         {
-            var expectedAuthor = TestDataLoader.GetSingle<Author>();
+            var expectedAuthor = TestDataLoader.GetById<Author>(authorId);
             var mock = _mockedRepository.Create(Method.GetById, authorId, expectedAuthor);
 
             var actualAuthor = mock.AuthorService.GetById(authorId);
@@ -66,7 +66,7 @@ namespace ReadersCorner.Core.Tests.Services
         public void Add_SuccessfulAddition()
         {
             var newAuthor = new Author { Name = "Author" };
-            var addedAuthor = new Author { Id = 5, Name = "Author" };
+            var addedAuthor = new Author { Id = 5, Name = newAuthor.Name };
             var mock = _mockedRepository.Create(Method.Add, newAuthor, addedAuthor);
 
             var result = mock.AuthorService.Add(newAuthor);

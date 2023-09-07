@@ -13,29 +13,42 @@ namespace ReadersCorner.Core.Services
             _repository = repository;
         }
 
-        public User Add(User model)
+        public User Add(User user)
         {
-            throw new NotImplementedException();
+            if (user == null)
+                return null;
+
+            return _repository.Add(user);
         }
 
-        public bool Delete(int id)
+        public bool Delete(int userId)
         {
-            throw new NotImplementedException();
+            var userToDelete = _repository.GetById(userId);
+            if (userToDelete == null)
+                return false;
+
+            return _repository.Delete(userToDelete);
         }
 
         public List<User> GetAll()
         {
-            throw new NotImplementedException();
+            return _repository.GetAll();
         }
 
-        public User GetById(int id)
+        public User GetById(int userId)
         {
-            throw new NotImplementedException();
+            return _repository.GetById(userId);
         }
 
-        public User Update(int userId, User model)
+        public User Update(int userId, User user)
         {
-            throw new NotImplementedException();
+            var existingUser = _repository.GetById(userId);
+            if (existingUser == null)
+                return null;
+
+            user.Id = existingUser.Id;
+
+            return _repository.Update(user);
         }
     }
 }
