@@ -48,7 +48,7 @@ namespace ReadersCorner.Core.Services
 
             author.Id = existingAuthor.Id;
 
-            return _repository.Update(existingAuthor);
+            return _repository.Update(author);
         }
     }
 }

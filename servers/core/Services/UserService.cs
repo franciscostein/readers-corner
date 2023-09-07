@@ -36,9 +36,15 @@ namespace ReadersCorner.Core.Services
             return _repository.GetById(userId);
         }
 
-        public User Update(int userId, User model)
+        public User Update(int userId, User user)
         {
-            throw new NotImplementedException();
+            var existingUser = _repository.GetById(userId);
+            if (existingUser == null)
+            return null;
+
+            user.Id = existingUser.Id;
+
+            return _repository.Update(user);
         }
     }
 }
