@@ -38,5 +38,17 @@ namespace ReadersCorner.Core.Tests.Services
 
             Assert.Null(result);
         }
+
+        [Fact]
+        public void GetAll_ReturnsUsersList()
+        {
+            var expectedUsers = TestDataLoader.GetList<User>();
+            var mock = _mockedRepository.Create(Method.GetAll, null, expectedUsers);
+
+            var users = mock.UserService.GetAll();
+
+            Assert.Equal(expectedUsers, users);
+            Assert.Equal(expectedUsers.Count, users.Count);
+        }
     }
 }
