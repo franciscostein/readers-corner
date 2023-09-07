@@ -1,5 +1,7 @@
 using ReadersCorner.Core.Models;
+using ReadersCorner.Core.Tests.Services.Utils;
 using ReadersCorner.Core.Tests.Utils;
+using Xunit;
 
 namespace ReadersCorner.Core.Tests.Services
 {
@@ -10,6 +12,19 @@ namespace ReadersCorner.Core.Tests.Services
         public UserServiceTests()
         {
             _mockedRepository = new MockedRepositoryFactory<User>();
+        }
+
+        [Theory]
+        [InlineData(1)]
+        [InlineData(2)]
+        public void GetById_ValidId_ReturnsCorrectUser(int userId)
+        {
+            var expectedUser = TestDataLoader.GetById<User>(userId);
+            var mock = _mockedRepository.Create(Method.GetById, userId, expectedUser);
+
+            var actualUser = mock.UserService.GetById(userId);
+
+            Assert.Equal(expectedUser, actualUser);
         }
     }
 }
