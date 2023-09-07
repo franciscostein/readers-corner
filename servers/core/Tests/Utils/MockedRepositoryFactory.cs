@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore.Update.Internal;
 using Moq;
 using ReadersCorner.Core.Models;
 using ReadersCorner.Core.Repositories.Interfaces;
@@ -24,6 +23,11 @@ namespace ReadersCorner.Core.Tests.Utils
             {
                 var authorRepositoryMock = new Mock<IAuthorRepository>();
                 _mockRepository = authorRepositoryMock.As<IRepository<TModel>>();
+            }
+            else if (typeof(TModel) == typeof(User))
+            {
+                var userRepositoryMock = new Mock<IUserRepository>();
+                _mockRepository = userRepositoryMock.As<IRepository<TModel>>();
             }
         }
 
@@ -74,6 +78,11 @@ namespace ReadersCorner.Core.Tests.Utils
                 var service = new AuthorService((IAuthorRepository)_mockRepository.Object);
                 return new MockedRepository<TModel>(_mockRepository, service);
             }
+            else if (typeof(TModel) == typeof(User))
+            {
+                var service = new UserService((IUserRepository)_mockRepository.Object);
+                return new MockedRepository<TModel>(_mockRepository, service);
+            }
 
             return new MockedRepository<TModel>();
         }
@@ -95,9 +104,16 @@ namespace ReadersCorner.Core.Tests.Utils
             AuthorService = service;
         }
 
+        public MockedRepository(Mock<IRepository<TModel>> repository, IUserService service)
+        {
+            Repository = repository;
+            UserService = service;
+        }
+
         public Mock<IRepository<TModel>> Repository { get; }
         public IBookService BookService { get; }
         public IAuthorService AuthorService { get; }
+        public IUserService UserService { get; }
     }
 
     public enum Method
