@@ -26,5 +26,17 @@ namespace ReadersCorner.Core.Tests.Services
 
             Assert.Equal(expectedUser, actualUser);
         }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        public void GetById_InvalidId_ReturnsNull(int invalidUserId)
+        {
+            var mock = _mockedRepository.Create(Method.GetById, invalidUserId, null);
+
+            var result = mock.UserService.GetById(invalidUserId);
+
+            Assert.Null(result);
+        }
     }
 }
