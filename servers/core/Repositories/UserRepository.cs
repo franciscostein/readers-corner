@@ -1,38 +1,54 @@
+using Microsoft.EntityFrameworkCore;
 using ReadersCorner.Core.Models;
+using ReadersCorner.Core.Repositories.Configurations;
 using ReadersCorner.Core.Repositories.Interfaces;
 
 namespace ReadersCorner.Core.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        public User Add(User model)
+        private readonly AppDbContext _context;
+
+        public UserRepository(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public bool Delete(User model)
+        public User Add(User user)
         {
-            throw new NotImplementedException();
+            var result = _context.Users.Add(user);
+            _ = SaveChanges();
+            return result.Entity;
+        }
+
+        public User GetById(int userId)
+        {
+            return _context.Users.FirstOrDefault(user => user.Id == userId);
         }
 
         public List<User> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.Users.ToList();
         }
 
-        public User GetById(int id)
+        public User Update(User user)
         {
-            throw new NotImplementedException();
+            var result = _context.Update(user);
+            _ = SaveChanges();
+            return result.Entity;
         }
 
-        public Task<User> GetUserByUsernameAsync(string username)
+        public bool Delete(User user)
         {
-            throw new NotImplementedException();
+            _context.Users.Remove(user);
+            return SaveChanges();            
         }
 
-        public User Update(User model)
+        public async Task<User> GetUserByUsernameAsync(string username)
         {
-            throw new NotImplementedException();
+            return await _context.Users.FirstOrDefaultAsync(user => user.UserName == username);
         }
+
+        private bool SaveChanges() => _context.SaveChanges() >= 0;
     }
 }
