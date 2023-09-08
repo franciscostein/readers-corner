@@ -1,13 +1,24 @@
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using ReadersCorner.Core.Models;
+using ReadersCorner.Core.Repositories.Configurations;
 using ReadersCorner.Core.Repositories.Interfaces;
 
 namespace ReadersCorner.Core.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        public User Add(User model)
+        private readonly AppDbContext _context;
+
+        public UserRepository(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+
+        public User Add(User user)
+        {
+            var result = _context.Users.Add(user);
+            _ = SaveChanges();
+            return result.Entity;
         }
 
         public bool Delete(User model)
@@ -34,5 +45,7 @@ namespace ReadersCorner.Core.Repositories
         {
             throw new NotImplementedException();
         }
+
+        private bool SaveChanges() => _context.SaveChanges() >= 0;
     }
 }
