@@ -21,17 +21,17 @@ namespace ReadersCorner.Core.Repositories
             return result.Entity;
         }
 
+        public User GetById(int userId)
+        {
+            return _context.Users.FirstOrDefault(user => user.Id == userId);
+        }
+
         public bool Delete(User model)
         {
             throw new NotImplementedException();
         }
 
         public List<User> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public User GetById(int id)
         {
             throw new NotImplementedException();
         }
