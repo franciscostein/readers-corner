@@ -32,17 +32,19 @@ namespace ReadersCorner.Core.Repositories
             return _context.Users.ToList();
         }
 
+        public User Update(User user)
+        {
+            var result = _context.Update(user);
+            _ = SaveChanges();
+            return result.Entity;
+        }
+
         public bool Delete(User model)
         {
             throw new NotImplementedException();
         }
 
         public Task<User> GetUserByUsernameAsync(string username)
-        {
-            throw new NotImplementedException();
-        }
-
-        public User Update(User model)
         {
             throw new NotImplementedException();
         }
