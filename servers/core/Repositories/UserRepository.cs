@@ -39,9 +39,10 @@ namespace ReadersCorner.Core.Repositories
             return result.Entity;
         }
 
-        public bool Delete(User model)
+        public bool Delete(User user)
         {
-            throw new NotImplementedException();
+            _context.Users.Remove(user);
+            return SaveChanges();            
         }
 
         public Task<User> GetUserByUsernameAsync(string username)
