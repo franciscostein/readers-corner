@@ -33,7 +33,7 @@ namespace ReadersCorner.Core.Repositories
 
         public User Update(User user)
         {
-            var result = _context.Update(user);
+            var result = _context.Users.Update(user);
             _ = SaveChanges();
             return result.Entity;
         }
