@@ -23,6 +23,10 @@ namespace ReadersCorner.Core.Repositories.Configurations
             {
                 AddRange<Author>(context);
             }
+            if (!context.Users.Any())
+            {
+                AddRange<User>(context);
+            }
             context.SaveChanges();
         }
 
@@ -53,6 +57,10 @@ namespace ReadersCorner.Core.Repositories.Configurations
                         context.Books.Add(book);
                     }
                 }
+            }
+            else if (typeof(T) == typeof(User))
+            {
+                context.Users.AddRange(list as List<User>);
             }
         }
     }
