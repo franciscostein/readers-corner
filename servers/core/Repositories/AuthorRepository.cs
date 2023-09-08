@@ -32,7 +32,7 @@ namespace ReadersCorner.Core.Repositories
 
         public Author Update(Author author)
         {
-            var result = _context.Update(author);
+            var result = _context.Authors.Update(author);
             _ = SaveChanges();
             return result.Entity;
         }
