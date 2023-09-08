@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using ReadersCorner.Core.Models;
 using ReadersCorner.Core.Repositories.Configurations;
@@ -26,12 +27,12 @@ namespace ReadersCorner.Core.Repositories
             return _context.Users.FirstOrDefault(user => user.Id == userId);
         }
 
-        public bool Delete(User model)
+        public List<User> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.Users.ToList();
         }
 
-        public List<User> GetAll()
+        public bool Delete(User model)
         {
             throw new NotImplementedException();
         }
