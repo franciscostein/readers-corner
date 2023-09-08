@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using ReadersCorner.Core.Models;
 using ReadersCorner.Core.Repositories.Configurations;
 using ReadersCorner.Core.Repositories.Interfaces;
@@ -45,9 +44,9 @@ namespace ReadersCorner.Core.Repositories
             return SaveChanges();            
         }
 
-        public Task<User> GetUserByUsernameAsync(string username)
+        public async Task<User> GetUserByUsernameAsync(string username)
         {
-            throw new NotImplementedException();
+            return await _context.Users.FirstOrDefaultAsync(user => user.UserName == username);
         }
 
         private bool SaveChanges() => _context.SaveChanges() >= 0;
