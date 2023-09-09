@@ -7,9 +7,9 @@ using ReadersCorner.Core.Services.Interfaces;
 
 namespace ReadersCorner.Core.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     [Authorize]
+    [ApiController]
+    [Route("api/[controller]")]
     public class AuthorsController : ControllerBase
     {
         private readonly IAuthorService _service;

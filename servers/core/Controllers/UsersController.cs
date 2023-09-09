@@ -1,5 +1,7 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ReadersCorner.Core.DTOs;
 using ReadersCorner.Core.Services.Interfaces;
 
 namespace ReadersCorner.Core.Controllers
@@ -15,6 +17,14 @@ namespace ReadersCorner.Core.Controllers
         {
             _service = service;
             _mapper = mapper;
-        }   
+        }
+
+        [HttpGet]
+        public ActionResult<IEnumerable<UserReadDTO>> GetUsers()
+        {
+            var users = _service.GetAll();
+
+            return Ok(_mapper.Map<IEnumerable<UserReadDTO>>(users));
+        }
     }
 }

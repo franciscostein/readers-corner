@@ -14,6 +14,7 @@ namespace ReadersCorner.Core.Mapping
             CreateMap<Author, AuthorReadDTO>();
             CreateMap<Author, AuthorUpdateDTO>();
             CreateMap<AuthorCreateDTO, Author>();
+            CreateMap<User, UserReadDTO>();
         }
     }
 }
