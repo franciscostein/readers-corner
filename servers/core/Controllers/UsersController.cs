@@ -48,5 +48,19 @@ namespace ReadersCorner.Core.Controllers
 
             return CreatedAtAction(nameof(GetUserById), new { userReadDTO.Id }, userReadDTO);
         }
+
+        [HttpPut("{id}")]
+        public ActionResult UpdateUser(int id, [FromBody] UserUpdateDTO userDTO)
+        {
+            var userModel = _mapper.Map<User>(userDTO);
+            var updatedUser = _service.Update(id, userModel);
+
+            if (updatedUser == null)
+                return NotFound();
+
+            var user = _mapper.Map<UserReadDTO>(updatedUser);
+
+            return Ok(user);
+        }
     }
 }

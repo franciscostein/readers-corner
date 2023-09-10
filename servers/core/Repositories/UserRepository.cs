@@ -41,7 +41,7 @@ namespace ReadersCorner.Core.Repositories
         public bool Delete(User user)
         {
             _context.Users.Remove(user);
-            return SaveChanges();            
+            return SaveChanges();
         }
 
         public async Task<User> GetUserByUsernameAsync(string username)
