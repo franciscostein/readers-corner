@@ -66,8 +66,8 @@ namespace ReadersCorner.Core.Tests.Services
         [Fact]
         public void Add_SuccessfulAddition()
         {
-            var newUser = new User { UserName = "user@test.com", Password = "#F@wv2Z$X&9@$" };
-            var addedUser = new User { Id = 7, UserName = newUser.UserName, Password = newUser.Password };
+            var newUser = new User { Username = "user@test.com", Password = "#F@wv2Z$X&9@$" };
+            var addedUser = new User { Id = 7, Username = newUser.Username, Password = newUser.Password };
             var mock = _mockedRepository.Create(Method.Add, newUser, addedUser);
 
             var result = mock.UserService.Add(newUser);

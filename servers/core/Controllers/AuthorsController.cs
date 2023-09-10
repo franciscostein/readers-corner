@@ -29,7 +29,7 @@ namespace ReadersCorner.Core.Controllers
             return Ok(_mapper.Map<IEnumerable<AuthorReadDTO>>(authors));
         }
 
-        [HttpGet("{id}", Name = "GetAuthorById")]
+        [HttpGet("{id}", Name = nameof(GetAuthorById))]
         public ActionResult<AuthorReadDTO> GetAuthorById(int id)
         {
             var author = _service.GetById(id);

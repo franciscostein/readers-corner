@@ -46,7 +46,7 @@ namespace ReadersCorner.Core.Repositories
 
         public async Task<User> GetUserByUsernameAsync(string username)
         {
-            return await _context.Users.FirstOrDefaultAsync(user => user.UserName == username);
+            return await _context.Users.FirstOrDefaultAsync(user => user.Username == username);
         }
 
         private bool SaveChanges() => _context.SaveChanges() >= 0;

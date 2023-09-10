@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ReadersCorner.Core.DTOs;
+using ReadersCorner.Core.Models;
 using ReadersCorner.Core.Services.Interfaces;
 
 namespace ReadersCorner.Core.Controllers
@@ -27,7 +28,7 @@ namespace ReadersCorner.Core.Controllers
             return Ok(_mapper.Map<IEnumerable<UserReadDTO>>(users));
         }
 
-        [HttpGet("{id}", Name = "GetUserById")]
+        [HttpGet("{id}", Name = nameof(GetUserById))]
         public ActionResult<UserReadDTO> GetUserById(int id)
         {
             var user = _service.GetById(id);
@@ -35,6 +36,17 @@ namespace ReadersCorner.Core.Controllers
                 return Ok(_mapper.Map<UserReadDTO>(user));
 
             return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<UserReadDTO>> CreateUserAsync(UserCreateDTO userDTO)
+        {
+            var userModel = _mapper.Map<User>(userDTO);
+            var user = _service.Add(userModel);
+
+            var userReadDTO = _mapper.Map<UserReadDTO>(user);
+
+            return CreatedAtAction(nameof(GetUserById), new { userReadDTO.Id }, userReadDTO);
         }
     }
 }
