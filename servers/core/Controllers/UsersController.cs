@@ -26,5 +26,15 @@ namespace ReadersCorner.Core.Controllers
 
             return Ok(_mapper.Map<IEnumerable<UserReadDTO>>(users));
         }
+
+        [HttpGet("{id}", Name = "GetUserById")]
+        public ActionResult<UserReadDTO> GetUserById(int id)
+        {
+            var user = _service.GetById(id);
+            if (user != null)
+                return Ok(_mapper.Map<UserReadDTO>(user));
+
+            return NotFound();
+        }
     }
 }
