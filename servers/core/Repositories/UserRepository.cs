@@ -41,12 +41,12 @@ namespace ReadersCorner.Core.Repositories
         public bool Delete(User user)
         {
             _context.Users.Remove(user);
-            return SaveChanges();            
+            return SaveChanges();
         }
 
         public async Task<User> GetUserByUsernameAsync(string username)
         {
-            return await _context.Users.FirstOrDefaultAsync(user => user.UserName == username);
+            return await _context.Users.FirstOrDefaultAsync(user => user.Username == username);
         }
 
         private bool SaveChanges() => _context.SaveChanges() >= 0;

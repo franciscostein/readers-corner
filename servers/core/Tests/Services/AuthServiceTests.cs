@@ -13,7 +13,7 @@ namespace ReadersCorner.Core.Tests.Services
         {
             var username = "user@email.com";
             var password = "p@s5w0rD";
-            var user = new User { Id = 1, UserName = username, Password = password };
+            var user = new User { Id = 1, Username = username, Password = password };
 
             var mockRepository = new Mock<IUserRepository>();
             mockRepository.Setup(repo => repo.GetUserByUsernameAsync(username)).ReturnsAsync(user);

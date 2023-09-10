@@ -7,9 +7,9 @@ using ReadersCorner.Core.Services.Interfaces;
 
 namespace ReadersCorner.Core.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     [Authorize]
+    [ApiController]
+    [Route("api/[controller]")]
     public class AuthorsController : ControllerBase
     {
         private readonly IAuthorService _service;
@@ -29,7 +29,7 @@ namespace ReadersCorner.Core.Controllers
             return Ok(_mapper.Map<IEnumerable<AuthorReadDTO>>(authors));
         }
 
-        [HttpGet("{id}", Name = "GetAuthorById")]
+        [HttpGet("{id}", Name = nameof(GetAuthorById))]
         public ActionResult<AuthorReadDTO> GetAuthorById(int id)
         {
             var author = _service.GetById(id);

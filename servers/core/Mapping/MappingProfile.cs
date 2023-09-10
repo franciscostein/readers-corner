@@ -9,11 +9,14 @@ namespace ReadersCorner.Core.Mapping
         public MappingProfile()
         {
             CreateMap<Book, BookReadDTO>();
-            CreateMap<Book, BookUpdateDTO>();
+            CreateMap<BookUpdateDTO, Book>();
             CreateMap<BookCreateDTO, Book>();
             CreateMap<Author, AuthorReadDTO>();
-            CreateMap<Author, AuthorUpdateDTO>();
+            CreateMap<AuthorUpdateDTO, Author>();
             CreateMap<AuthorCreateDTO, Author>();
+            CreateMap<User, UserReadDTO>();
+            CreateMap<UserUpdateDTO, User>();
+            CreateMap<UserCreateDTO, User>();
         }
     }
 }
