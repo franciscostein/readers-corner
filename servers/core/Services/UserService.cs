@@ -18,6 +18,8 @@ namespace ReadersCorner.Core.Services
             if (user == null)
                 return null;
 
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+
             return _repository.Add(user);
         }
 
