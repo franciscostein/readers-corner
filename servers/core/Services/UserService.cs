@@ -18,6 +18,8 @@ namespace ReadersCorner.Core.Services
             if (user == null)
                 return null;
 
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+
             return _repository.Add(user);
         }
 
@@ -47,6 +49,7 @@ namespace ReadersCorner.Core.Services
                 return null;
 
             user.Id = existingUser.Id;
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
 
             return _repository.Update(user);
         }

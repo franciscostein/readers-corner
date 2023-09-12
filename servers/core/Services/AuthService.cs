@@ -28,6 +28,6 @@ namespace ReadersCorner.Core.Services
             throw new NotImplementedException();
         }
 
-        private bool ValidatePassword(User user, string password) => string.Equals(user.Password, password);
+        private bool ValidatePassword(User user, string password) => BCrypt.Net.BCrypt.Verify(user.Password, password);
     }
 }
